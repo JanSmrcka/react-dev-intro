@@ -1,15 +1,19 @@
-import { useState } from 'react'
+import { useState, type ChangeEvent } from 'react'
 
-export const TodoForm = () => {
-  const [todoName, setTodoName] = useState('') // VŽDY NA ZAČÁTKU KOMPONENTY, nesmí být za podmínkou nebo na konci komponenty
+type TodoFormProps = {
+  addTodo: (todoName: string) => void
+}
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Input changed:', e.target.value)
+export const TodoForm = ({ addTodo }: TodoFormProps) => {
+  const [todoName, setTodoName] = useState('')
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTodoName(e.target.value)
   }
 
   const handleSubmit = () => {
     console.log('Form submitted with todo:', todoName)
+    addTodo(todoName)
   }
 
   return (

@@ -1,6 +1,6 @@
 import type { Todo } from '../types'
 
-const API_URL = 'https://eli-workshop.vercel.app/api/users/hosm10/todos'
+const API_URL = 'https://eli-workshop.vercel.app/api/users/xsmrj00/todos'
 
 class ApiErorr extends Error {
   constructor(message: string) {
@@ -24,7 +24,7 @@ export const todoApi = {
   },
   async createTodo(newTodo: string) {
     const body = {
-      text: newTodo,
+      name: newTodo,
     }
     const response = await fetch(API_URL, {
       method: 'POST',
