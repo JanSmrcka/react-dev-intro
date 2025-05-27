@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export const TodoForm = () => {
     const [todoName, setTodoName] = useState("");
@@ -8,7 +8,7 @@ export const TodoForm = () => {
     };
 
     const handleSubmit = () => {
-        //console.log("adding todo: ", todoName);
+        console.log("adding todo: ", todoName);
     };
 
     return (
