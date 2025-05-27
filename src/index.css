@@ -83,15 +83,18 @@ button {
   border-radius: var(--radius);
   font-size: 1rem;
   cursor: pointer;
+  margin: 5px;
 }
 
 button:hover {
   background-color: var(--primary-hover);
 }
+
 button:disabled {
   background-color: var(--text-secondary);
   cursor: not-allowed;
 }
+
 button:disabled:hover {
   background-color: var(--text-secondary);
   cursor: not-allowed;
@@ -148,6 +151,7 @@ li button.toggle {
   border-radius: var(--radius);
   cursor: pointer;
 }
+
 .link:hover {
   color: var(--primary);
 }
@@ -192,9 +196,11 @@ footer {
   0% {
     opacity: 0.5;
   }
+
   50% {
     opacity: 0.7;
   }
+
   100% {
     opacity: 0.5;
   }
@@ -221,6 +227,7 @@ footer {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -276,6 +283,7 @@ footer {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);

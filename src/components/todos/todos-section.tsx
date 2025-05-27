@@ -36,6 +36,15 @@ export const TodosSection = () => {
         }
     };
 
+    const toggleTodo = async (todoId: number, completed: boolean) => {
+        try {
+            const updatedTodo = await todoApi.toggleTodo(todoId, !completed);
+            setTodos((prevTodos) => prevTodos.map((todo) => todo.id === todoId ? updatedTodo : todo));
+        } catch (error) {
+            console.error("Error toggling todo:", error);
+        }
+    };
+
     useEffect(() => {
         //console.log("use effect called");
         fetchTodos();
@@ -47,7 +56,7 @@ export const TodosSection = () => {
             <div className="todo-container">
                 <ul id="todo-list">
                     {todos.map((todo) => {
-                        return <TodoItem key={todo.id} todo={todo} removeTodo={removeTodo} />
+                        return <TodoItem key={todo.id} todo={todo} removeTodo={removeTodo} toggleTodo={toggleTodo} />
                     })}
                 </ul>
             </div>
