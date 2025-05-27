@@ -16,6 +16,17 @@ export const TodosSection = () => {
         };
     };
 
+    const addTodo = async (todoName: string) => {
+        try {
+            const newTodo = await todoApi.createTodo(todoName);
+            setTodos((prevTodos) => {
+                return [...prevTodos, newTodo]
+            });
+        } catch (error) {
+            console.error("Error adding todo:", error);
+        }
+    };
+
     useEffect(() => {
         //console.log("use effect called");
         fetchTodos();
@@ -23,7 +34,7 @@ export const TodosSection = () => {
 
     return (
         <main>
-            <TodoForm />
+            <TodoForm addTodo={addTodo} />
             <div className="todo-container">
                 <ul id="todo-list">
                     {todos.map((todo) => {

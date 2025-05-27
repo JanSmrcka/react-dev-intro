@@ -1,6 +1,10 @@
 import { useState } from 'react';
 
-export const TodoForm = () => {
+type TodoFormProps = {
+    addTodo: (todoName: string) => void;
+};
+
+export const TodoForm = ({ addTodo }: TodoFormProps) => {
     const [todoName, setTodoName] = useState("");
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -8,7 +12,8 @@ export const TodoForm = () => {
     };
 
     const handleSubmit = () => {
-        console.log("adding todo: ", todoName);
+        //console.log("adding todo: ", todoName);
+        addTodo(todoName);
     };
 
     return (
