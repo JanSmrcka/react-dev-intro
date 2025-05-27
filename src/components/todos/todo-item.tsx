@@ -3,8 +3,6 @@ import { useTodoContext } from '../../hooks/useTodosContext';
 
 type TodoItemProps = {
     todo: Todo;
-    removeTodo: (todoId: number) => void;
-    toggleTodo: (todoId: number, completed: boolean) => void;
 };
 
 export const TodoItem = ({ todo }: TodoItemProps) => {
