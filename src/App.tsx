@@ -1,11 +1,10 @@
+import { Header } from "./components/header"
+
 function App() {
   return (
     <>
       <div className="container">
-        <header>
-          <h1>My Todo List</h1>
-          <p className="subtitle">Add your tasks</p>
-        </header>
+        <Header title="My Todo List" subtitle="Add your tasks" />
         <main>
           <form id="todo-form">
             <div className="input-group">
