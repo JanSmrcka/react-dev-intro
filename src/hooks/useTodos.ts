@@ -5,20 +5,23 @@ import { todoApi } from '../api/todoApi'
 export const useTodos = () => {
   const [todos, setTodos] = useState<Todo[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const fetchTodos = async () => {
+    setError(null)
     setIsLoading(true)
     try {
       const data = await todoApi.fetchTodos()
       setTodos(data)
     } catch (error) {
-      console.error('Failed to fetch todos: ', error)
+      setError('Failed to load todos: ' + error)
     } finally {
       setIsLoading(false)
     }
   }
 
   const addTodo = async (todoName: string) => {
+    setError(null)
     setIsLoading(true)
     try {
       const newTodo = await todoApi.createTodo(todoName)
@@ -26,31 +29,33 @@ export const useTodos = () => {
         return [...prevTodos, newTodo]
       })
     } catch (error) {
-      console.error('Failed to save new todo: ', error)
+      setError('Failed to create todo: ' + error)
     } finally {
       setIsLoading(false)
     }
   }
 
   const deleteTodo = async (todoId: number) => {
+    setError(null)
     setIsLoading(true)
     try {
       await todoApi.deleteTodo(todoId)
       setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== todoId))
     } catch (error) {
-      console.error('Failed to save new todo: ', error)
+      setError('Failed to delete todo: ' + error)
     } finally {
       setIsLoading(false)
     }
   }
 
   const toggleTodo = async (todoId: number, completed: boolean) => {
+    setError(null)
     setIsLoading(true)
     try {
       const updatedTodo = await todoApi.toggleTodo(todoId, !completed)
       setTodos((prevTodos) => prevTodos.map((todo) => (todo.id === todoId ? updatedTodo : todo)))
     } catch (error) {
-      console.log(error)
+      setError('Failed to update todo: ' + error)
     } finally {
       setIsLoading(false)
     }
@@ -69,5 +74,7 @@ export const useTodos = () => {
     addTodo,
     deleteTodo,
     toggleTodo,
+    error,
+    refetch: fetchTodos,
   }
 }

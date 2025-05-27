@@ -2,12 +2,14 @@ import { TodoForm } from './todo-form'
 import { TodoItem } from './todo-item'
 import { Spinner } from '../spinner'
 import { useTodos } from '../../hooks/useTodos'
+import { ErrorMessage } from '../error-message'
 
 export const TodosSection = () => {
-  const { addTodo, isLoading, todos, deleteTodo, toggleTodo } = useTodos()
+  const { addTodo, isLoading, todos, deleteTodo, toggleTodo, error, refetch } = useTodos()
 
   return (
     <main>
+      {error && <ErrorMessage message={error} onDissmis={refetch} />}
       <TodoForm addTodo={addTodo} />
       <div className="todo-container">
         <ul id="todo-list" className={isLoading ? 'isLoading' : ''}>
