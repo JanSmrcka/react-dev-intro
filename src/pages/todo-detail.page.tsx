@@ -1,23 +1,11 @@
+import { Link, useNavigate } from 'react-router'
 import { ErrorMessage } from '../components/error-message'
-import { useQuery } from '@tanstack/react-query'
 import { Spinner } from '../components/spinner'
-import { todoApi } from '../api/todoApi'
-import { Link, useParams, useNavigate } from 'react-router'
+import { useTodoQuery } from '../hooks/useTodoQuery'
 
 export default function TodoDetailPage() {
-  const params = useParams()
   const navigate = useNavigate()
-
-  const {
-    data: todo,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ['todo', params.id],
-    queryFn: () => {
-      return todoApi.fetchTodo(Number(params.id))
-    },
-  })
+  const { data: todo, isLoading, isError } = useTodoQuery()
 
   if (isLoading) {
     return <Spinner />
