@@ -1,13 +1,22 @@
-import { Link, useParams } from 'react-router'
+import { Link, useParams, useNavigate } from 'react-router'
 import { useTodoContext } from '../hooks/useTodosContext'
+import { ErrorMessage } from '../components/error-message'
 
 export default function TodoDetailPage() {
   const params = useParams()
+  const navigate = useNavigate()
   const { todos } = useTodoContext()
   const todo = todos.find((todo) => todo.id === Number(params.id))
 
   if (!todo) {
-    return <div>Todo not found</div>
+    return (
+      <>
+        <ErrorMessage message="Todo not found" onDissmis={() => navigate('/')} />
+        <Link to="/" className="back-button">
+          Back to Tasks
+        </Link>
+      </>
+    )
   }
 
   return (
