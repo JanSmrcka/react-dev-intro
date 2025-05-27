@@ -56,4 +56,8 @@ export const todoApi = {
 
         return handleResponse<Todo>(response)
     },
+    async fetchTodo(todoId: number) {
+        const response = await fetch(`${API_URL}/${todoId}`);
+        return handleResponse<Todo>(response);
+    },
 }
