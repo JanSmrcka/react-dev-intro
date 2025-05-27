@@ -3,16 +3,22 @@ import { TodoForm } from './todo-form'
 import { TodoItem } from './todo-item'
 import type { Todo } from '../../types'
 import { todoApi } from '../../api/todoApi'
+import { Spinner } from '../spinner'
 
 export const TodosSection = () => {
   const [todos, setTodos] = useState<Todo[]>([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const fetchTodos = async () => {
+    setIsLoading(true)
+
     try {
       const data = await todoApi.fetchTodos()
       setTodos(data)
     } catch (error) {
       console.error('Failed to fetch todos: ', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -61,6 +67,7 @@ export const TodosSection = () => {
             return <TodoItem key={todo.id} todo={todo} deleteTodo={deleteTodo} toggleTodo={toggleTodo} />
           })}
         </ul>
+        {isLoading && todos.length === 0 && <Spinner />}
       </div>
     </main>
   )
