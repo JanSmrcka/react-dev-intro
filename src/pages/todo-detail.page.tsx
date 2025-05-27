@@ -1,52 +1,51 @@
-import { useParams } from 'react-router'
-import { useEffect, useState } from 'react'
-import { todoApi } from '../api/todoApi'
-import type { Todo } from '../types'
+import { Link } from 'react-router'
 import { Spinner } from '../components/spinner'
+import { Header } from '../components/header'
+import { useTodoQuery } from '../hooks/useTodoQuery'
 
 const TodoDetailPage = () => {
-  const params = useParams()
+  const { data: todo, isLoading, isError } = useTodoQuery()
 
-  const [todo, setTodo] = useState<Todo | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    setLoading(true)
-    if (!params.id) return
-    setLoading(true)
-    todoApi
-      .fetchTodoDetail(Number(params.id))
-      .then(setTodo)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false))
-  }, [params.id])
-
-  if (loading) {
+  if (isLoading) {
     return <Spinner />
   }
-  if (error) return <div>Error: {error}</div>
-  if (!todo) return <div>No todo found.</div>
 
+  if (isError || !todo) {
+    return (
+      <div className="todo-detail-error">
+        <p>Could not load todo item.</p>
+        <Link to="/">
+          <button className="back-button">Back to Home</button>
+        </Link>
+      </div>
+    )
+  }
   return (
-    <div>
-      <h1>Todo Detail Page</h1>
-      <p>
-        <strong>ID:</strong> {todo.id}
-      </p>
-      <p>
-        <strong>Name:</strong> {todo.name}
-      </p>
-      <p>
-        <strong>Completed:</strong> {todo.completed ? 'Yes' : 'No'}
-      </p>
-      <p>
-        <strong>Description:</strong> {todo.description || 'No description provided'}
-      </p>
-      <p>
-        <strong>Priority:</strong> {todo.priority !== undefined ? todo.priority : 'No priority set'}
-      </p>
-    </div>
+    <>
+      <Header title="Todo Detail" subtitle="Here is detail of todo" />
+      <div className="todo-detail">
+        <div className="todo-detail-card">
+          <h2>{todo.name}</h2>
+          <div className="todo-detail-status">
+            Status:{' '}
+            <span className={todo.completed ? 'completed' : 'active'}>{todo.completed ? 'Completed' : 'Active'}</span>
+          </div>
+          <div className="todo-detail-status">
+            Priority: <span className={'completed'}>{todo.priority}</span>
+          </div>
+
+          {todo.description && (
+            <div className="todo-detail-description">
+              <p>{todo.description}</p>
+            </div>
+          )}
+        </div>
+
+        <Link to="/">
+          <button className="back-button">Back to Home</button>
+        </Link>
+      </div>
+    </>
   )
 }
 

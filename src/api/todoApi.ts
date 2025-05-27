@@ -2,27 +2,26 @@ import type { Todo } from '../types'
 
 const API_URL = 'https://eli-workshop.vercel.app/api/users/luut02/todos'
 
-class ApiError extends Error {
+class ApiErorr extends Error {
   constructor(message: string) {
     super(message)
-    this.name = 'API Error in ToDo API'
+    this.name = 'ApiError'
   }
 }
 
 const handleResponse = async <T>(response: Response): Promise<T> => {
   if (!response.ok) {
-    throw new ApiError(`API request failed ${response.status}`)
+    throw new ApiErorr(`Api request failed ${response.status}`)
   }
   const data = await response.json()
   return data
 }
 
 export const todoApi = {
-  async fetchTodos(): Promise<Todo[]> {
+  async fetchTodos() {
     const response = await fetch(API_URL)
     return handleResponse<Todo[]>(response)
   },
-
   async createTodo(newTodo: string) {
     const body = {
       name: newTodo,
@@ -34,9 +33,9 @@ export const todoApi = {
       },
       body: JSON.stringify(body),
     })
+
     return handleResponse<Todo>(response)
   },
-
   async deleteTodo(id: number) {
     const response = await fetch(`${API_URL}/${id}`, {
       method: 'DELETE',
@@ -44,11 +43,9 @@ export const todoApi = {
         'Content-Type': 'application/json',
       },
     })
-    return handleResponse<Todo>(response)
+    return handleResponse(response)
   },
-
   async toggleTodo(id: number, completed: boolean) {
-    console.log('test')
     const response = await fetch(`${API_URL}/${id}`, {
       method: 'PATCH',
       headers: {
@@ -56,9 +53,10 @@ export const todoApi = {
       },
       body: JSON.stringify({ completed }),
     })
+
     return handleResponse<Todo>(response)
   },
-  async fetchTodoDetail(id: number): Promise<Todo> {
+  async fetchTodo(id: number) {
     const response = await fetch(`${API_URL}/${id}`)
     return handleResponse<Todo>(response)
   },
