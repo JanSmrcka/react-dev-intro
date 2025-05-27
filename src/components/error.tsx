@@ -11,7 +11,7 @@ export const ErrorMessage = ({ message, onDismiss }: ErrorProps) => {
                 <span>{message}</span>
             </div>
             {onDismiss && (
-                <button className="error-dismiss" onClick={onDismiss}></button>
+                <button className="error-dismiss" onClick={onDismiss}>Dismiss</button>
             )}
         </div>
     )
