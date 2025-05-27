@@ -16,17 +16,47 @@ export const TodosSection = () => {
     }
   }
 
+  const addTodo = async (todoName: string) => {
+    try {
+      const newTodo = await todoApi.createTodo(todoName)
+      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== newTodo.id).concat(newTodo))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const deleteTodo = async (todoId: number) => {
+    try {
+      await todoApi.deleteTodo(todoId)
+      setTodos((prevTodos) => {
+        return prevTodos.filter((todo) => todo.id !== todoId)
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const toggleTodo = async (todoId: number, completed: boolean) => {
+    try {
+      const updatedTodo = await todoApi.toggleTodo(todoId, !completed)
+      setTodos((prevTodos) => {
+        return prevTodos.map((todo) => (todo.id === todoId ? updatedTodo : todo))
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     fetchTodos()
   }, [])
 
   return (
     <main>
-      <TodoForm />
+      <TodoForm addTodo={addTodo} />
       <div className="todo-container">
         <ul id="todo-list">
           {todos.map((todo) => {
-            return <TodoItem key={todo.id} todo={todo} />
+            return <TodoItem key={todo.id} todo={todo} deleteTodo={deleteTodo} toggleTodo={toggleTodo} />
           })}
         </ul>
       </div>

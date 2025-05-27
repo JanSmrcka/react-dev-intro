@@ -1,6 +1,10 @@
 import { useState, type ChangeEvent } from 'react'
 
-export const TodoForm = () => {
+type TodoFormProps = {
+  addTodo: (todoName: string) => void
+}
+
+export const TodoForm = ({ addTodo }: TodoFormProps) => {
   const [todoName, setTodoName] = useState('')
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTodoName(e.target.value)
@@ -8,6 +12,7 @@ export const TodoForm = () => {
 
   const handleSubmit = () => {
     console.log('Form')
+    addTodo(todoName)
   }
 
   return (
