@@ -1,7 +1,6 @@
 import { TodoForm } from './todo-form'
 import { TodoItem } from './todo-item'
 import { Spinner } from '../spinner'
-import { useTodos } from '../../hooks/useTodos'
 import { ErrorMessage } from '../error-message'
 import { useTodoContext } from '../../hooks/useTodosContext'
 

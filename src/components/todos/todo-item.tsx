@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import type { Todo } from '../../types'
 
 type TodoItemProps = {
@@ -21,6 +22,7 @@ export const TodoItem = ({ todo, deleteTodo, toggleTodo }: TodoItemProps) => {
       <button onClick={handleToggleTodo} className="toggle">
         {todo.completed ? 'Undo' : 'Completed'}
       </button>
+      <Link to={`/todos/${todo.id}`} className="link">Go to Detail</Link>
     </li>
   )
 }
