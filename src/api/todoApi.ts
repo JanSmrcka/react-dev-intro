@@ -25,7 +25,7 @@ export const todoApi = {
 
   async createTodo(newTodo: string) {
     const body = {
-      text: newTodo,
+      name: newTodo,
     }
     const response = await fetch(API_URL, {
       method: 'POST',
