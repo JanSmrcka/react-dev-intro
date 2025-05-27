@@ -1,11 +1,12 @@
+import { Link } from 'react-router'
+import { useTodoContext } from '../../hooks/useTodosContext'
 import type { Todo } from '../../types'
 
 type TodoItemProps = {
   todo: Todo
-  deleteTodo: (todoId: number) => void
-  toggleTodo: (todoId: number, completed: boolean) => void
 }
-export const TodoItem = ({ todo, deleteTodo, toggleTodo }: TodoItemProps) => {
+export const TodoItem = ({ todo }: TodoItemProps) => {
+  const { deleteTodo, toggleTodo } = useTodoContext()
   const handleDeleteTodo = () => {
     deleteTodo(todo.id)
   }
@@ -21,6 +22,9 @@ export const TodoItem = ({ todo, deleteTodo, toggleTodo }: TodoItemProps) => {
       <button onClick={handleToggleTodo} className="toggle">
         {todo.completed ? 'Undo' : 'Completed'}
       </button>
+      <Link to={`/todos/${todo.id}`} className="link">
+        Go to Detail
+      </Link>
     </li>
   )
 }
