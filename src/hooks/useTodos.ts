@@ -79,6 +79,7 @@ export const useTodos = () => {
         toggleTodo,
         removeTodo,
         error,
-        refetch: fetchTodos
+        refetch: fetchTodos,
+        fetchTodos
     }
 }
