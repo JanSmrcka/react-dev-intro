@@ -1,11 +1,9 @@
 import { useState, type ChangeEvent } from 'react'
+import { useTodoContext } from '../../hooks/useTodosContext'
 
-type TodoFormProps = {
-  addTodo: (todoName: string) => void
-}
-
-export const TodoForm = ({ addTodo }: TodoFormProps) => {
+export const TodoForm = () => {
   const [todoName, setTodoName] = useState('')
+  const { addTodo } = useTodoContext()
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log('Input changed:', e.target.value)
