@@ -18,9 +18,18 @@ const handleResponse = async <T>(response: Response): Promise<T> => {
 }
 
 export const todoApi = {
+  // fetch all todos
   async fetchTodos() {
     const response = await fetch(API_URL)
     return handleResponse<Todo[]>(response)
+  },
+
+  // fetch single todo
+  async fetchTodo(id: number) {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: 'GET',
+    })
+    return handleResponse<Todo>(response)
   },
 
   async createTodo(newTodo: string) {

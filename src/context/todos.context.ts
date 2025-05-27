@@ -9,6 +9,7 @@ type TodosContext = {
   toggleTodo: (id: number, completed: boolean) => Promise<void>
   deleteTodo: (id: number) => Promise<void>
   refetch: () => Promise<void>
+  fetchTodo: Todo[]
 }
 
 export const TodosContext = createContext<TodosContext | undefined>(undefined)

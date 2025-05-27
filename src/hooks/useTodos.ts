@@ -20,6 +20,19 @@ export const useTodos = () => {
     }
   }
 
+  const fetchTodo = async (todoId: number) => {
+    setError(null)
+    setIsLoading(true)
+    try {
+      const data = await todoApi.fetchTodo(todoId)
+      setTodos([data])
+    } catch (error) {
+      setError('Failed to load todo: ' + error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   const addTodo = async (todoName: string) => {
     setError(null)
     setIsLoading(true)
@@ -74,5 +87,6 @@ export const useTodos = () => {
     toggleTodo,
     error,
     refetch: fetchTodos,
+    fetchTodo,
   }
 }
