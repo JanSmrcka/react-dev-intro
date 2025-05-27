@@ -68,8 +68,8 @@ export const TodosSection = () => {
     return (
         <main>
             <TodoForm addTodo={addTodo} />
-            <div className={`todo-container ${isUpdating ? 'isLoading' : ''}`}>
-                <ul id="todo-list">
+            <div className="todo-container">
+                <ul className={isUpdating ? "isLoading" : ""} id="todo-list">
                     {todos.map((todo) => {
                         return <TodoItem key={todo.id} todo={todo} removeTodo={removeTodo} toggleTodo={toggleTodo} />
                     })}
