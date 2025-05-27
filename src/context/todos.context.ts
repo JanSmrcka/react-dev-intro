@@ -6,8 +6,8 @@ type TodosContext = {
   isLoading: boolean
   error: string | null
   addTodo: (todoName: string) => Promise<void>
-  toggleTodo: (id: number) => Promise<void>
-  deleteTodo: (id: number, completed: boolean) => Promise<void>
+  toggleTodo: (id: number, completed: boolean) => Promise<void>
+  deleteTodo: (id: number) => Promise<void>
   refetch: () => Promise<void>
 }
 

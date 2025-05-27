@@ -24,10 +24,8 @@ export const useTodos = () => {
     setError(null)
     setIsLoading(true)
     try {
-      const newTodo = await todoApi.createTodo(todoName)
-      setTodos((prevTodos) => {
-        return [...prevTodos, newTodo]
-      })
+      await todoApi.createTodo(todoName)
+      await fetchTodos()
     } catch (error) {
       setError('Failed to create todo: ' + error)
     } finally {
@@ -40,7 +38,7 @@ export const useTodos = () => {
     setIsLoading(true)
     try {
       await todoApi.deleteTodo(todoId)
-      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== todoId))
+      await fetchTodos()
     } catch (error) {
       setError('Failed to delete todo: ' + error)
     } finally {
@@ -52,8 +50,8 @@ export const useTodos = () => {
     setError(null)
     setIsLoading(true)
     try {
-      const updatedTodo = await todoApi.toggleTodo(todoId, !completed)
-      setTodos((prevTodos) => prevTodos.map((todo) => (todo.id === todoId ? updatedTodo : todo)))
+      await todoApi.toggleTodo(todoId, completed)
+      await fetchTodos()
     } catch (error) {
       setError('Failed to update todo: ' + error)
     } finally {
