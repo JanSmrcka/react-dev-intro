@@ -1,17 +1,36 @@
-import { Header } from "./components/header"
-import { TodosSection } from "./components/todos/todos-section"
+import { BrowserRouter, Route, Routes } from 'react-router'
+import { TodosProvider } from './providers/todos.provider'
+import { Layout } from './components/layout'
+import TodoListPage from './pages/todo-list.page'
+import { lazy, Suspense } from 'react'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const TodoDetailPage = lazy(() => import('./pages/todo-detail.page'))
+
+const queryClient = new QueryClient()
 
 function App() {
   return (
-    <>
-      <div className="container">
-        <Header title="my todo app" subtitle="add your tasks"/>
-        <TodosSection/>
-        <footer>
-          <p>Click on a task to mark it as completed</p>
-        </footer>
-      </div>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Layout>
+        <TodosProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<TodoListPage />}></Route>
+              <Route
+                path="/todos/:id"
+                element={
+                  <Suspense fallback={<div>isLoadingJavascript</div>}>
+                    <TodoDetailPage></TodoDetailPage>
+                  </Suspense>
+                }
+              ></Route>
+              <Route path="*" element={<div>Not found</div>}></Route>
+            </Routes>
+          </BrowserRouter>
+        </TodosProvider>
+      </Layout>
+    </QueryClientProvider>
   )
 }
 

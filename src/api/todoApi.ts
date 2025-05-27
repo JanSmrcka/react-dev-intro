@@ -22,7 +22,11 @@ export const todoApi = {
     const response = await fetch(API_URL)
     return handleResponse<Todo[]>(response)
   },
-  async createTodos(newTodo: string) {
+  async fetchTodo(id?: number): Promise<Todo> {
+    const response = await fetch(`${API_URL}/${id}`)
+    return handleResponse<Todo>(response)
+  },
+  async createTodo(newTodo: string) {
     const body = {
       name: newTodo,
     }
@@ -38,7 +42,7 @@ export const todoApi = {
     return handleResponse<Todo>(response)
   },
 
-  async toggleTodo(id: string, isToggled: boolean) {
+  async toggleTodo(id: number, isToggled: boolean) {
     const body = {
       completed: isToggled,
     }
@@ -52,8 +56,8 @@ export const todoApi = {
     return handleResponse<Todo>(response)
   },
 
-  async deleteTodo(id: string) {
-    const response = await fetch(`${API_URL}/${id}`, {
+  async deleteTodo(todoId: number) {
+    const response = await fetch(`${API_URL}/${todoId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

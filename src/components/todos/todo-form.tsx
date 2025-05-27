@@ -1,7 +1,9 @@
 import { useState, type ChangeEvent } from 'react'
+import { useTodosContext } from '../hooks/useTodosContext'
 
 export const TodoForm = () => {
   const [todoName, setTodoName] = useState('')
+  const { addTodo } = useTodosContext()
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log('Input changed', e.target.value)
@@ -9,23 +11,22 @@ export const TodoForm = () => {
   }
 
   const handleSubmit = () => {
+    addTodo(todoName)
     console.log('Form submitted with todo:', todoName)
   }
 
   return (
-    <form id="todo-form">
-      <div className="input-group">
-        <input
-          value={todoName}
-          onChange={handleInputChange}
-          name="todo-text"
-          id="new-todo-input"
-          placeholder="What needs to be done?"
-        />
-        <button onClick={handleSubmit} type="submit" id="add-btn">
-          Add
-        </button>
-      </div>
-    </form>
+    <div className="input-group">
+      <input
+        value={todoName}
+        onChange={handleInputChange}
+        name="todo-text"
+        id="new-todo-input"
+        placeholder="What needs to be done?"
+      />
+      <button onClick={handleSubmit} type="submit" id="add-btn">
+        Add
+      </button>
+    </div>
   )
 }

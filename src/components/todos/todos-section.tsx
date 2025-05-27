@@ -1,34 +1,23 @@
-import { useEffect, useState } from 'react'
 import { TodoForm } from './todo-form'
 import { TodoItem } from './todo-item'
-import type { Todo } from '../../types'
-import { todoApi } from '../../api/todoApi'
+import { Spinner } from '../spinner'
+import { ErrorMessage } from '../error'
+import { useTodosContext } from '../hooks/useTodosContext'
 
 export const TodosSection = () => {
-  const [todos, setTodos] = useState<Todo[]>([])
-
-  const fetchTodos = async () => {
-    try {
-      const data = await todoApi.fetchTodos()
-      setTodos(data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  useEffect(() => {
-    fetchTodos()
-  }, [])
+  const { isLoading, todos, error, refetch } = useTodosContext()
 
   return (
     <main>
+      {error && <ErrorMessage message={error} onDismiss={refetch} />}
       <TodoForm />
       <div className="todo-container">
-        <ul id="todo-list">
+        <ul id="todo-list" className={isLoading ? 'isLoading' : ''}>
           {todos.map((todo) => {
             return <TodoItem key={todo.id} todo={todo}></TodoItem>
           })}
         </ul>
+        {isLoading && todos.length === 0 && <Spinner />}
       </div>
     </main>
   )
