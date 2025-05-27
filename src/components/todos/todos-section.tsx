@@ -27,6 +27,15 @@ export const TodosSection = () => {
     }
   }
 
+  const deleteTodo = async (todoId: number) => {
+    try {
+      await todoApi.deleteTodo(todoId)
+      setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== todoId))
+    } catch (error) {
+      console.error('Failed to save new todo: ', error)
+    }
+  }
+
   // useEffect is a React Hook that lets you synchronize a component with external systems and handle side effects
   // It runs after every render and can optionally clean up when the component unmounts
   // The first argument is the effect function, the second is an optional dependency array
@@ -40,7 +49,7 @@ export const TodosSection = () => {
       <div className="todo-container">
         <ul id="todo-list">
           {todos.map((todo) => {
-            return <TodoItem key={todo.id} todo={todo} />
+            return <TodoItem key={todo.id} todo={todo} deleteTodo={deleteTodo} />
           })}
         </ul>
       </div>
