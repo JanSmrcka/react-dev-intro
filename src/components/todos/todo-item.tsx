@@ -1,4 +1,5 @@
 import type { Todo } from '../../types'
+import { useTodoContext } from '../../hooks/useTodosContext';
 
 type TodoItemProps = {
     todo: Todo;
@@ -6,7 +7,8 @@ type TodoItemProps = {
     toggleTodo: (todoId: number, completed: boolean) => void;
 };
 
-export const TodoItem = ({ todo, removeTodo, toggleTodo }: TodoItemProps) => {
+export const TodoItem = ({ todo }: TodoItemProps) => {
+    const { removeTodo, toggleTodo } = useTodoContext();
     const handleDelete = () => {
         removeTodo(todo.id);
     };
