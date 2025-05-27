@@ -58,4 +58,8 @@ export const todoApi = {
     })
     return handleResponse<Todo>(response)
   },
+  async fetchTodoDetail(id: number): Promise<Todo> {
+    const response = await fetch(`${API_URL}/${id}`)
+    return handleResponse<Todo>(response)
+  },
 }
