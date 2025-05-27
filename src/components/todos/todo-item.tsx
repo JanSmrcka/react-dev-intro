@@ -1,5 +1,6 @@
 import type { Todo } from '../../types'
 import { useTodoContext } from '../../hooks/useTodosContext'
+import { Link } from 'react-router'
 
 type TodoItemProps = {
   todo: Todo
@@ -22,6 +23,9 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
       <button onClick={handleToggleTodo} className="toggle">
         {todo.completed ? 'Undo' : 'Complete'}
       </button>
+      <Link to={`/todos/${todo.id}`} className="lik">
+        Go to detail
+      </Link>
     </li>
   )
 }

@@ -24,6 +24,11 @@ export const todoApi = {
         const response = await fetch(API_URL)
         return handleResponse<Todo[]>(response)
     },
+
+    async fetchTodo (id: number) {
+        const response = await fetch(`${API_URL}/${id}`)
+        return handleResponse<Todo>(response)
+    },
     async createTodo(newTodo: string) {
         const body = {
             name: newTodo
