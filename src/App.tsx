@@ -1,4 +1,4 @@
-import { lazy } from 'react'
+import { lazy, Suspense } from 'react'
 import { Layout } from './components/layout'
 import TodoListPage from './pages/todos-list.page'
 import { TodosProvider } from './providers/todos.provider'
@@ -11,8 +11,22 @@ function App() {
       <TodosProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<TodoListPage />} />
-            <Route path="/todos/:id" element={<TodoDetailPage />} />
+            <Route
+              path="/"
+              element={
+                <Suspense fallback={<div>is loading</div>}>
+                  <TodoListPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/todos/:id"
+              element={
+                <Suspense fallback={<div>Is loading javascript</div>}>
+                  <TodoDetailPage />
+                </Suspense>
+              }
+            />
             <Route path="*" element={<div>Not found</div>} />
           </Routes>
         </BrowserRouter>

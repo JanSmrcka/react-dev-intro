@@ -28,7 +28,7 @@ const TodoDetailPage = () => {
       .finally(() => {
         setLoading(false)
       })
-  }, [])
+  }, [params])
 
   if (loading) {
     return <Spinner />
