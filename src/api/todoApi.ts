@@ -22,6 +22,11 @@ export const todoService = {
     return handleResponse<Todo[]>(response);
   },
 
+  async fetchSingleTodo(todoId: number): Promise<Todo> {
+    const response = await fetch(`${API_URL}/${todoId}`);
+    return handleResponse<Todo>(response);
+  },
+
   async createTodo(todoValue: string){
     const response = await fetch(API_URL, {
       method: 'POST',
