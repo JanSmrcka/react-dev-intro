@@ -1,17 +1,9 @@
-import { useParams } from "react-router";
-import { todoApi } from "../api/todoApi";
 import { Spinner } from "../components/spinner";
 import { ErrorMessage } from "../components/error";
-import { useQuery } from "@tanstack/react-query";
+import { useTodoQuery } from "../hooks/useTodoQuery";
 
 const TodoDetailPage = () => {
-    const params = useParams();
-
-    const { data: todo, isLoading, error } = useQuery({
-        queryKey: ["todo", params.id],
-        queryFn: () => todoApi.fetchTodo(Number(params.id)),
-        enabled: !!params.id,
-    });
+    const { data: todo, isLoading, error } = useTodoQuery();
 
     if (isLoading) return <Spinner />;
     if (error || !todo) return <ErrorMessage message="Failed to fetch todo." />;
