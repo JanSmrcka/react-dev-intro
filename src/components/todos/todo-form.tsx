@@ -7,7 +7,7 @@ type TodoFormProps = {
 export const TodoForm = ({ addTodo }: TodoFormProps) => {
   const [todoName, setTodoName] = useState('')
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log('Input changed', e.target.value)
+    // console.log('Input changed', e.target.value)
     setTodoName(e.target.value)
   }
 
