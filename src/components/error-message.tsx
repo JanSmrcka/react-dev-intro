@@ -3,7 +3,7 @@ type ErrorProps = {
   onDissmis?: () => void
 }
 
-export const Error = ({ message, onDissmis: onDismiss }: ErrorProps) => {
+export const ErrorMessage = ({ message, onDissmis: onDismiss }: ErrorProps) => {
   return (
     <div className="error-message">
       <div className="error-content">
