@@ -3,16 +3,21 @@ import { TodoItem } from './todo-item';
 import { useState, useEffect } from 'react';
 import type { Todo } from '../../types';
 import { todoApi } from '../../api/todoApi';
+import { Spinner } from '../spinner';
 
 export const TodosSection = () => {
     const [todos, setTodos] = useState<Todo[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const fetchTodos = async () => {
+        setIsLoading(true);
         try {
             const data = await todoApi.fetchTodos();
             setTodos(data);
         } catch (error) {
             console.error("Error fetching todos:", error);
+        } finally {
+            setIsLoading(false);
         };
     };
 
@@ -59,6 +64,7 @@ export const TodosSection = () => {
                         return <TodoItem key={todo.id} todo={todo} removeTodo={removeTodo} toggleTodo={toggleTodo} />
                     })}
                 </ul>
+                {isLoading && todos.length === 0 && <Spinner />}
             </div>
         </main>
     )
