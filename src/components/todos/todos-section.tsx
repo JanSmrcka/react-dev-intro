@@ -3,16 +3,21 @@ import { TodoItem } from './todo-item'
 import { TodoForm } from './todos-form'
 import type { Todo } from '../../types'
 import { todoApi } from '../../api/todoApi'
+import { Spinner } from '../spinner'
 
 export const TodosSection = () => {
     const [todos, setTodos] = useState<Todo[]>([])
+    const [isLoading, setIsLoading] = useState(false)
 
     const fetchTodos = async () => {
+        setIsLoading(true)
         try {
             const data = await todoApi.fetchTodos()
             setTodos(data)
         } catch (error) {
             console.error('Failed to fetch todos:', error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -23,7 +28,27 @@ export const TodosSection = () => {
                 return [...prevTodos, newTodo]
             })
         } catch (error) {
-            console.error("error adding new todo")
+            console.error(error)
+        }
+    }
+
+    const deleteTodo = async (todoId: number) => {
+        try {
+            await todoApi.deleteTodo(todoId)
+            setTodos((prevTodos)=>prevTodos.filter((todo) => todo.id !== todoId))
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    const toggleTodo = async (todoId: number, completed: boolean) => {
+        try {
+            const updatedTodo = await todoApi.toggle(todoId, !completed)
+            setTodos((prevTodos) => 
+            prevTodos.map((todo) => (todo.id === todoId ? updatedTodo : todo))
+            )
+        } catch (error) {
+            console.error(error) 
         }
     }
 
@@ -37,9 +62,10 @@ export const TodosSection = () => {
       <div className="todo-container">
         <ul id="todo-list">
             {todos.map((todo) => {
-                return <TodoItem key={todo.id} todo={todo} />
+                return <TodoItem key={todo.id} todo={todo} deleteTodo={deleteTodo} toggleTodo={toggleTodo}/>
             })}
         </ul>
+        {isLoading && todos.length === 0 && <Spinner/>}
       </div>
     </main>
   )

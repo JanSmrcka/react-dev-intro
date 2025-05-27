@@ -35,15 +35,15 @@ export const todoApi = {
         })
         return handleResponse<Todo>(response)
     },
-    async removeTodo(id: string){
+    async deleteTodo(id: number){
         const response = await fetch(API_URL + "/" + id,{
             method: "DELETE"
         })
         return handleResponse(response)
     },
-    async toggle(id: string, updated_completed: boolean){
+    async toggle(id: number, updated_completed: boolean){
         const body = {
-            completed: !updated_completed
+            completed: updated_completed
         }
         const response = await fetch(API_URL + "/" + id,{
             method: "PATCH",
