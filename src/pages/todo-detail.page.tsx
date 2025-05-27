@@ -1,43 +1,37 @@
-import { useParams } from 'react-router'
-import { useEffect, useState } from 'react'
-import type { Todo } from '../types.ts'
+import { Link, useParams } from 'react-router'
 import { todoService } from '../api/todoApi.ts'
 import { Spinner } from '../components/spinner.tsx'
+import { useQuery } from '@tanstack/react-query'
 
 const TodoDetailPage = () => {
 
   const params = useParams<{ id: string }>()
-  const [todo, setTodo] = useState<Todo | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    setLoading(true)
-    const data = todoService.fetchSingleTodo(Number(params.id))
-    data.then((todoData) => {
-      setTodo(todoData);
-    }).catch((error) => {
-      console.error("Failed to fetch todo details:", error);
-    }).finally(
-      () => setLoading(false)
-    );
-  }, [])
+  const {data, isLoading, isError} = useQuery({
+    queryKey: ['todo', params.id],
+    queryFn: () => todoService.fetchSingleTodo(Number(params.id)),
+  })
 
 
   return (
-    <div>
-      {loading ? (
+    <>
+    {isError ? (
+      <>
+        <p style={{ color: 'red' }}>Error: {'Failed to fetch todo details'}</p>
+      </>
+      ) : isLoading ? (
         <Spinner />
       ) : (
         <>
-          <h1>{todo?.name}</h1>
-          <p>State: {todo?.completed ? 'Completed' : 'Not completed'}</p>
-          <p>Description: {todo?.description}</p>
-          <p>Priority: {todo?.priority}</p>
-          <p>ID: {todo?.id}</p>
+          <h1>{data?.name}</h1>
+          <p>State: {data?.completed ? 'Completed' : 'Not completed'}</p>
+          <p>Description: {data?.description}</p>
+          <p>Priority: {data?.priority}</p>
+          <p>ID: {data?.id}</p>
         </>
       )}
-    </div>
-
+      <Link to={'/'}>Go Back</Link>
+    </>
   )
 }
 

@@ -1,29 +1,44 @@
 import { TodosProvider } from './components/providers/todos.provider.tsx'
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { Layout } from './components/todos/layout.tsx'
-import TodoListPage from './pages/todo-list.page.tsx'
-import TodoDetailPage from './pages/todo-detail.page.tsx'
+import { lazy, Suspense } from 'react'
+import { Spinner } from './components/spinner.tsx'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+const TodoListPage = lazy(() => import('./pages/todo-list.page.tsx'))
+const TodoDetailPage = lazy(() => import('./pages/todo-detail.page.tsx'))
+
+const queryClient = new QueryClient()
 
 function App() {
   return (
     <>
+      <QueryClientProvider client={queryClient}>
       <Layout>
         <TodosProvider>
           <BrowserRouter>
             <Routes>
             <Route
               path="/"
-              element={<TodoListPage />}
+              element={
+                <Suspense fallback={<Spinner/>}>
+                  <TodoListPage />
+                </Suspense>
+              }
             />
               <Route
                 path="/todo/:id"
-                element={<TodoDetailPage />}
+                element={
+                <Suspense fallback={<Spinner/>}>
+                  <TodoDetailPage />
+                </Suspense>
+              }
               />
             </Routes>
           </BrowserRouter>
         </TodosProvider>
       </Layout>
+      </QueryClientProvider>
     </>
   )
 }
