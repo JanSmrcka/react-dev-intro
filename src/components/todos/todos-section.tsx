@@ -1,36 +1,28 @@
 import { TodoForm } from "./todo-form"
-import { useEffect, useState } from 'react'
-import type { Todo } from '../../types.ts'
-import { todoService } from '../../api/todoApi.ts'
 import { TodoItem } from './todo-item.tsx'
+import { Spinner } from '../spinner.tsx'
+import { TodoError } from './todo-error.tsx'
+import { useTodosContext } from '../../hooks/useTodosContext.ts'
 
 export const TodosSection = () => {
-  const [todos, setTodos] = useState<Todo[]>([])
-
-  useEffect(() => {
-     fetchTodos()
-  }, [])
-
-  const fetchTodos = async () => {
-    try{
-      const data = await todoService.fetchTodos();
-      setTodos(data);
-    }
-    catch(err){
-      console.error("Failed to fetch todos:", err);
-    }
-
-  }
+ const {todos, error, isLoading, refetch} = useTodosContext()
 
   return (
     <main>
-      <TodoForm/>
+      {error != null && (<TodoError message={error} onDismiss={refetch} />)}
+      <TodoForm />
       <div className="todo-container">
         <ul id="todo-list">
           {todos.map((todo) => {
-          return <TodoItem key={todo.id} todo={todo}/>
+          return (
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+            />
+          )
         })}
         </ul>
+        {isLoading && todos.length === 0 && <Spinner />}
       </div>
     </main>
   )
