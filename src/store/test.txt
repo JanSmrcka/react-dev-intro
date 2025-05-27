@@ -1,0 +1,61 @@
+import type { Todo } from '../types/types';
+import { TodosService } from '../services/todos.service.ts'
+
+interface TodoState {
+  todos: Todo[];
+  initialize: () => void, 
+  addTodo: (text: string) => void;
+  toggleTodo: (id: number | null) => void;
+}
+
+export const useTodoStore = create<TodoState>()(
+    (set) => ({
+      todos: [] as Todo[],
+      initialize: () => {
+        // Request the data from the api
+        TodosService.fetchTodos().then((response) => {
+          console.log('Fetched data:', response.data);
+          const todos = response.data as Todo[];
+
+          set(() => ({
+            todos: todos.map((todo) => ({
+              ...todo,
+              createdAt: new Date(todo.createdAt),
+              updatedAt: new Date(todo.updatedAt),
+            })),
+          }));
+        });
+      },
+      addTodo: (text: string) => {
+        const now = new Date();
+        const newTodo: Todo = {
+          id: null,
+          name: text,
+          description: null,
+          priority: null,
+          completed: false,
+          createdAt: now,
+          updatedAt: now,
+        };
+        
+        // TODO: Send request to the server
+        
+        // Set the todo to the state.
+        set((state) => ({
+          todos: [...state.todos, newTodo],
+        }));
+      },
+      toggleTodo: (id) =>
+        set((state) => ({
+          todos: state.todos.map((todo) =>
+            todo.id === id
+              ? {
+                ...todo,
+                completed: !todo.completed,
+                updatedAt: new Date(),
+              }
+              : todo
+          ),
+        })),
+    }),
+);

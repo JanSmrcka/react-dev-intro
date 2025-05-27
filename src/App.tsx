@@ -1,7 +1,16 @@
 import InputForm from './components/InputForm';
 import TodoList from './components/TodoList.tsx'
+import { loadAllTodos } from './store/todo.store.ts';
+import { useEffect } from 'react'
+import { useAppDispatch } from './helpers/hooks.ts'
 
 function App() {
+  // Initialize the todo store
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(loadAllTodos());
+  }, []);
+    
   return (
     <>
       <div className="container">

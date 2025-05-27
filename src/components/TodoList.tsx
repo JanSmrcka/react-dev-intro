@@ -1,16 +1,18 @@
-import { useTodoStore } from '../store/todo.store.ts'
+import { useSelector } from 'react-redux'
+import type { RootState } from '../store/store.ts'
+import type { Todo } from '../types/types.ts'
 
 function TodoList() {
   // Retrieve the todos from the store
-  const todos = useTodoStore(state => state.todos);
+  const allTodos : Todo[] = useSelector((state: RootState) => state.todos.todos ?? []);
   
   return (
    <>
      <ul id="todo-list">
-       {todos.map(t => {
+       {allTodos.map(t => {
          return <li key={t.id} className={t.completed ? 'completed' : ''}>
-           <span>{t.text}</span>
-           <button onClick={() => useTodoStore.getState().toggleTodo(t.id)}>Toggle</button>
+           <span>{t.name}</span>
+           <button>Toggle</button>
          </li>
        })}
      </ul>
