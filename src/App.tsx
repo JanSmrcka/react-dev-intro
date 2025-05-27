@@ -1,15 +1,18 @@
 import { Header } from './components/header'
 import { TodosSection } from './components/todos/todos-section'
+import { TodosProvider } from './providers/todos.provider'
 function App() {
   return (
     <>
-      <div className="container">
-        <Header title="My Todo List" subtitle="Add your tasks."></Header>
-        <TodosSection />
-      </div>
-      <footer>
-        <p>Click on a task to mark it as completed</p>
-      </footer>
+      <TodosProvider>
+        <div className="container">
+          <Header title="My Todo List" subtitle="Add your tasks."></Header>
+          <TodosSection />
+        </div>
+        <footer>
+          <p>Click on a task to mark it as completed</p>
+        </footer>
+      </TodosProvider>
     </>
   )
 }
