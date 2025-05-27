@@ -27,6 +27,15 @@ export const TodosSection = () => {
         }
     };
 
+    const removeTodo = async (todoId: number) => {
+        try {
+            await todoApi.deleteTodo(todoId);
+            setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== todoId))
+        } catch (error) {
+            console.error("Error removing todo:", error);
+        }
+    };
+
     useEffect(() => {
         //console.log("use effect called");
         fetchTodos();
@@ -38,7 +47,7 @@ export const TodosSection = () => {
             <div className="todo-container">
                 <ul id="todo-list">
                     {todos.map((todo) => {
-                        return <TodoItem key={todo.id} todo={todo} />
+                        return <TodoItem key={todo.id} todo={todo} removeTodo={removeTodo} />
                     })}
                 </ul>
             </div>
