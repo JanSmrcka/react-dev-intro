@@ -1,16 +1,17 @@
 import { useState, type ChangeEvent } from 'react'
-import { useTodoContext } from '../../hooks/useTodosContext'
+import { useTodoCreate } from '../../hooks/useTodoCreate'
 
 export const TodoForm = () => {
   const [todoName, setTodoName] = useState('') // Pole - na prvni posici je hodnota stavu, na druhe funkce
-  const { addTodo } = useTodoContext()
+
+  const { mutate } = useTodoCreate()
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTodoName(e.target.value)
   }
 
   const handleSubmit = () => {
-    addTodo(todoName)
+    mutate(todoName)
   }
 
   return (
