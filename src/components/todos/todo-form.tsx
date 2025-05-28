@@ -1,9 +1,9 @@
 import { useState, type ChangeEvent } from 'react'
-import { useTodosContext } from '../hooks/useTodosContext'
+import { useTodoCreate } from '../hooks/useTodoCreate'
 
 export const TodoForm = () => {
   const [todoName, setTodoName] = useState('')
-  const { addTodo } = useTodosContext()
+  const { mutate } = useTodoCreate()
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log('Input changed', e.target.value)
@@ -11,7 +11,7 @@ export const TodoForm = () => {
   }
 
   const handleSubmit = () => {
-    addTodo(todoName)
+    mutate(todoName)
     console.log('Form submitted with todo:', todoName)
   }
 
