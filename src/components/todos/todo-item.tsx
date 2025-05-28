@@ -16,7 +16,7 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
   }
 
   const handleToggleTodo = () => {
-    toggleTodo(todo)
+    toggleTodo({ id: todo.id, completed: !todo.completed })
   }
 
   return (

@@ -5,3 +5,5 @@ export type Todo = {
   description?: string
   priority?: number
 }
+
+export type TodoToggle = Pick<Todo, 'id' | 'completed'>

@@ -1,4 +1,4 @@
-import type { Todo } from '../types'
+import type { Todo, TodoToggle } from '../types'
 
 const API_URL = 'https://eli-workshop.vercel.app/api/users/hana15/todos'
 
@@ -53,7 +53,7 @@ export const todoApi = {
     return handleResponse<Todo>(response)
   },
 
-  async toggleTodo(id: number, completed: boolean) {
+  async toggleTodo({ id, completed }: TodoToggle) {
     const response = await fetch(`${API_URL}/${id}`, {
       method: 'PATCH',
       headers: {
