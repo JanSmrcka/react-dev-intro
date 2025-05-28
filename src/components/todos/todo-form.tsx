@@ -1,11 +1,10 @@
 import { useState, type ChangeEvent } from 'react'
-import { useTodoContext } from '../../hooks/useTodosContext'
 import { useTodoCreate } from '../../hooks/useTodoCreate'
 
 export const TodoForm = () => {
   const [todoName, setTodoName] = useState('')
- 
-const {mutate} = useTodoCreate()
+
+  const { mutate } = useTodoCreate()
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTodoName(e.target.value)
