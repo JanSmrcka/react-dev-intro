@@ -2,7 +2,7 @@ import type { Todo } from '../types'
 
 const API_URL = 'https://eli-workshop.vercel.app/api/users/hana15/todos'
 
-class ApiError extends Error {
+export class ApiError extends Error {
   constructor(message: string) {
     super(message)
     this.name = 'Api error in Todo app'
