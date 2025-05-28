@@ -18,11 +18,6 @@ export const useTodoDelete = () => {
       return { previousTodos }
     },
 
-    onSuccess: () => {
-      // When i call todoDelete, the system refetches todos like 8 times. The refetch shloud occur just once. TODO: fix.
-      queryClient.invalidateQueries({ queryKey: ['todos'] })
-    },
-
     // TODO onError
   })
 }

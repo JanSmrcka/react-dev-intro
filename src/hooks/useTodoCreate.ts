@@ -5,7 +5,6 @@ import type { Todo } from '../types'
 export const useTodoCreate = () => {
   const queryClient = useQueryClient()
 
-  queryClient.invalidateQueries({ queryKey: ['todos'] })
   return useMutation<Todo, ApiError, string, { previousTodos: Todo[] | undefined }>({
     mutationKey: ['createTodo'],
     mutationFn: async (todoName: string) => {
@@ -31,10 +30,6 @@ export const useTodoCreate = () => {
       if (content?.previousTodos) {
         queryClient.setQueryData<Todo[]>(['todos'], content.previousTodos)
       }
-    },
-
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] })
     },
   })
 }
