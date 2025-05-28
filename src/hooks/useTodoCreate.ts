@@ -6,16 +6,16 @@ export const useTodoCreate = () => {
   const queryClient = useQueryClient()
   queryClient.invalidateQueries({ queryKey: ['todos'] })
 
-  return useMutation<Todo, ApiError, string>({
+  return useMutation<Todo, ApiError, string, { previousTodos: Todo[] | undefined }>({
     mutationKey: ['createTodo'],
     mutationFn: async (todoName: string) => {
       return await todoApi.createTodo(todoName)
     },
     onMutate: async (todoName) => {
       const previousTodos = queryClient.getQueryData<Todo[]>(['todos'])
-      queryClient.setQueryData(['todos'], () => {
+      queryClient.setQueryData<Todo[]>(['todos'], (old) => {
         return [
-          ...(previousTodos || []),
+          ...(old || []),
           {
             name: todoName,
             id: Date.now(),
@@ -23,6 +23,13 @@ export const useTodoCreate = () => {
           },
         ]
       })
+
+      return { previousTodos }
+    },
+    onError: (err, variables, context) => {
+      if (context?.previousTodos) {
+        queryClient.setQueryData<Todo[]>(['todos'], context.previousTodos)
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
