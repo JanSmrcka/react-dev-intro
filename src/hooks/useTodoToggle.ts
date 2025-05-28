@@ -10,6 +10,13 @@ export const useTodoToggle = () => {
     mutationFn: async (todoToggle: TodoToggle) => {
       return await todoApi.toggleTodo(todoToggle)
     },
+    onMutate: (todoToggle) => {
+      const previousTodos = queryClient.getQueryData<Todo[]>(['todos'])
+      queryClient.setQueryData<Todo[]>(['todos'], (old) => {
+        return old?.map((todo) => (todo.id === todoToggle.id ? { ...todo, completed: todoToggle.completed } : todo))
+      })
+      return { previousTodos }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
     },
