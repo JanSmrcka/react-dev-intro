@@ -1,7 +1,6 @@
 import { TodoForm } from './todo-form'
 import { TodoItem } from './todo-item'
 import { Spinner } from '../spinner'
-
 import { ErrorMessage } from '../error-message'
 import { useTodosQuery } from '../../hooks/useTodosQuery'
 
