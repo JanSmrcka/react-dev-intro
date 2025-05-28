@@ -1,28 +1,25 @@
 import { Link } from 'react-router'
 import type { Todo } from '../../types'
+import { useTodoDelete } from '../../hooks/useTodoDelete'
+import { useTodoToggle } from '../../hooks/useTodoTOggle'
 
 type TodoItemProps = {
   todo: Todo
-  deleteTodo: (todoId: number) => void
-  toggleTodo: (todoId: number, completed: boolean) => void
 }
-export const TodoItem = ({ todo, deleteTodo, toggleTodo }: TodoItemProps) => {
-  const handleDeleteTodo = () => {
-    deleteTodo(todo.id)
-  }
-
-  const handleToggleTodo = () => {
-    toggleTodo(todo.id, todo.completed)
-  }
+export const TodoItem = ({ todo }: TodoItemProps) => {
+  const { mutate: deleteTodo } = useTodoDelete()
+  const { mutate: toggleTodoMutation } = useTodoToggle()
 
   return (
     <li className={todo.completed ? 'completed' : ''}>
       <span>{todo.name}</span>
-      <button onClick={handleDeleteTodo}>Delete</button>
-      <button onClick={handleToggleTodo} className="toggle">
+      <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+      <button onClick={() => toggleTodoMutation({ todoId: todo.id, completed: !todo.completed })} className="toggle">
         {todo.completed ? 'Undo' : 'Completed'}
       </button>
-      <Link to={`/todos/${todo.id}`} className="link">Go to Detail</Link>
+      <Link to={`/todos/${todo.id}`} className="link">
+        Go to Detail
+      </Link>
     </li>
   )
 }
