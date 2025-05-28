@@ -1,23 +1,24 @@
 import { TodoForm } from './todo-form'
 import { TodoItem } from './todo-item'
 import { Spinner } from '../spinner'
-import { useTodoContext } from '../../hooks/useTodosContext'
+
 import { ErrorMessage } from '../error-message'
+import { useTodosQuery } from '../../hooks/useTodosQuery'
 
 export const TodosSection = () => {
-  const { isLoading, todos, error, refetch } = useTodoContext()
+  const { data: todos, error, isLoading, refetch } = useTodosQuery()
 
   return (
     <main>
-      {error && <ErrorMessage message={error} onDissmis={refetch} />}
+      {error && <ErrorMessage message={error.message} onDissmis={refetch} />}
       <TodoForm />
       <div className="todo-container">
-        <ul id="todo-list" className={isLoading ? 'isLoading' : ''}>
-          {todos.map((todo) => {
+        <ul>
+          {todos?.map((todo) => {
             return <TodoItem key={todo.id} todo={todo} />
           })}
         </ul>
-        {isLoading && todos.length === 0 && <Spinner />}
+        {isLoading && <Spinner />}
       </div>
     </main>
   )
