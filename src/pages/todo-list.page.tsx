@@ -4,7 +4,7 @@ import { TodosSection } from '../components/todos/todos-section'
 const TodoListPage = () => {
   return (
     <>
-      <Header title="my todo app" subtitle="add your tasks" />
+      <Header title="My Todo List" subtitle="Add your tasks" />
       <TodosSection />
       <footer>
         <p>Click on a task to mark it as completed</p>

@@ -2,7 +2,6 @@ type HeaderProps = {
   title: string
   subtitle: string
 }
-
 export const Header = (props: HeaderProps) => {
   return (
     <header>

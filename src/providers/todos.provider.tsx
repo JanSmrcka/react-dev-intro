@@ -1,13 +1,14 @@
 import type { ReactNode } from 'react'
 import { TodosContext } from '../context/todos.context'
-import { useTodos } from '../components/hooks/useTodos'
+import { useTodos } from '../hooks/useTodos'
 
 type Props = {
   children: ReactNode
 }
-
-export const TodosProvider = (props: Props) => {
+export const TodosProvider = ({ children }: Props) => {
   const todosState = useTodos()
 
-  return <TodosContext.Provider value={todosState}>{props.children}</TodosContext.Provider>
+  return (
+    <TodosContext.Provider value={todosState}>{children}</TodosContext.Provider>
+  )
 }

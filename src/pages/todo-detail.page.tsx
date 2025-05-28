@@ -1,27 +1,16 @@
-import { Link, useParams } from 'react-router'
-import { todoApi } from '../api/todoApi'
+import { Link } from 'react-router'
 import { Spinner } from '../components/spinner'
 import { Header } from '../components/header'
-import { useQuery } from '@tanstack/react-query'
+import { useTodoQuery } from '../hooks/useTodoQuery'
 
 const TodoDetailPage = () => {
-  const params = useParams()
-  const {
-    data: todo,
-    isLoading: loading,
-    isError: error,
-  } = useQuery({
-    queryKey: ['todo', Number(params.id)],
-    queryFn: () => {
-      return todoApi.fetchTodo(Number(params.id))
-    },
-  })
+  const { data: todo, isLoading, isError } = useTodoQuery()
 
-  if (loading) {
+  if (isLoading) {
     return <Spinner />
   }
 
-  if (error || !todo) {
+  if (isError || !todo) {
     return (
       <div className="todo-detail-error">
         <p>Could not load todo item.</p>
@@ -39,7 +28,9 @@ const TodoDetailPage = () => {
           <h2>{todo.name}</h2>
           <div className="todo-detail-status">
             Status:{' '}
-            <span className={todo.completed ? 'completed' : 'active'}>{todo.completed ? 'Completed' : 'Active'}</span>
+            <span className={todo.completed ? 'completed' : 'active'}>
+              {todo.completed ? 'Completed' : 'Active'}
+            </span>
           </div>
           <div className="todo-detail-status">
             Priority: <span className={'completed'}>{todo.priority}</span>
