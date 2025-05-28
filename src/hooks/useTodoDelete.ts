@@ -10,6 +10,7 @@ export const useTodoDelete = () => {
       return todoApi.deleteTodo(id)
     },
     onSuccess: () => {
+      // When i call todoDelete, the system refetches todos like 8 times. The refetch shloud occur just once. TODO: fix.
       queryClient.invalidateQueries({ queryKey: ['todos'] })
     },
   })
