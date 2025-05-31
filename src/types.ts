@@ -6,6 +6,5 @@ export type Todo = {
   priority?: number
 }
 
-// export type TodoCreate = Omit<Todo, 'id' | 'completed'>
-
+export type TodoCreate = Omit<Todo, 'id' | 'completed'>
 export type TodoToggle = Pick<Todo, 'id' | 'completed'>

@@ -1,3 +1,4 @@
+// src/App.tsx
 import { BrowserRouter, Route, Routes } from 'react-router'
 import { Layout } from './components/layout'
 import { lazy, Suspense } from 'react'
@@ -6,6 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const TodoDetailPage = lazy(() => import('./pages/todo-detail.page'))
 const TodoListPage = lazy(() => import('./pages/todo-list.page'))
+const TodoCreatePage = lazy(() => import('./pages/todo-create.page'))
 
 const queryClient = new QueryClient()
 
@@ -18,11 +20,21 @@ function App() {
             <Route
               path="/"
               element={
-                <Suspense fallback={<div>is loading</div>}>
+                <Suspense fallback={<div>Loading…</div>}>
                   <TodoListPage />
                 </Suspense>
               }
             />
+
+            <Route
+              path="/todos/new"
+              element={
+                <Suspense fallback={<Spinner />}>
+                  <TodoCreatePage />
+                </Suspense>
+              }
+            />
+
             <Route
               path="/todos/:id"
               element={
@@ -31,6 +43,7 @@ function App() {
                 </Suspense>
               }
             />
+
             <Route path="*" element={<div>Not found</div>} />
           </Routes>
         </BrowserRouter>
