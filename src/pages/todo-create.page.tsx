@@ -1,19 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { FormEvent } from 'react'
 import { useNavigate } from 'react-router'
-import { Spinner } from '../components/spinner'
 import { useTodoCreate } from '../hooks/useTodoCreate'
 import type { TodoCreatePayload } from '../hooks/useTodoCreate'
 
 export const TodoCreatePage = () => {
   const navigate = useNavigate()
 
-  const createTodoMutation = useTodoCreate()
-  const { mutate: createTodo, isPending, error } = createTodoMutation
+  const { mutate: createTodo, status: createStatus, error } = useTodoCreate()
+  const isCreating = createStatus === 'pending'
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [priority, setPriority] = useState<number>(1)
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMounted(true), 50)
+    return () => clearTimeout(timer)
+  }, [])
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -32,7 +37,7 @@ export const TodoCreatePage = () => {
   }
 
   return (
-    <main className="container">
+    <main className={`container fade-in ${mounted ? 'visible' : ''}`}>
       <div>
         <button
           type="button"
@@ -92,8 +97,8 @@ export const TodoCreatePage = () => {
         </div>
 
         <div>
-          <button type="submit" disabled={isPending}>
-            {isPending ? <Spinner /> : 'Create Todo'}
+          <button type="submit" disabled={isCreating} className="btn-create">
+            {isCreating ? 'Creating…' : 'Create Todo'}
           </button>
         </div>
 

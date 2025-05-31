@@ -18,7 +18,7 @@ const TodoListPage = () => {
       <TodosSection />
 
       <footer>
-        <p>Click on a task to mark it as completed</p>
+        <p>braj15 semestralní práce</p>
       </footer>
     </>
   )

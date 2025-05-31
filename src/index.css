@@ -90,13 +90,17 @@ button {
 button:hover {
   background-color: var(--primary-hover);
 }
+
 button:disabled {
   background-color: var(--text-secondary);
   cursor: not-allowed;
+  opacity: 0.7;
 }
+
 button:disabled:hover {
   background-color: var(--text-secondary);
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .text-button {
@@ -380,4 +384,70 @@ footer {
 .centered-container {
   text-align: center;
   margin-bottom: 1.5rem;
+}
+
+.loading-text {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+}
+
+.detail-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-toggle {
+  background: none;
+  border: none;
+  color: var(--primary);
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.btn-toggle:hover {
+  color: var(--primary);
+  background: none !important;
+  transform: scale(1.05);
+}
+
+.btn-delete {
+  background-color: var(--danger);
+  color: var(--text);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-delete:hover {
+  background-color: #c03537;
+}
+
+.back-link {
+  margin-top: 1.5rem;
+  display: inline-block;
+}
+
+.detail-error-message {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+
+.todo-container {
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.todo-container.fade-in {
+  opacity: 1;
+}
+
+.todo-container.fade-out {
+  opacity: 0;
 }
