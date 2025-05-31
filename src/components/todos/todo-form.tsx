@@ -12,7 +12,7 @@ export const TodoForm = () => {
 
   const handleSubmit = () => {
     console.log('Form submitted with todo:', todoName)
-    mutate(todoName)
+    mutate({name: todoName})
   }
 
   return (
