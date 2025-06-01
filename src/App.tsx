@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Toaster } from 'react-hot-toast'
 
 const TodoDetailPage = lazy(() => import('./pages/todo-detail.page'))
+const TodoCreatePage = lazy(() => import('./pages/todo-create.page'))
 const TodoListPage = lazy(() => import('./pages/todo-list.page'))
 
 const queryClient = new QueryClient()
@@ -30,6 +31,14 @@ function App() {
               element={
                 <Suspense fallback={<Spinner />}>
                   <TodoDetailPage />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/todos/create"
+              element={
+                <Suspense fallback={<Spinner />}>
+                  <TodoCreatePage />
                 </Suspense>
               }
             />

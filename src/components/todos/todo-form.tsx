@@ -1,7 +1,11 @@
 import { useState, type FormEvent } from 'react'
 import { useTodoCreate } from '../../hooks/useTodoCreate'
 
-export const TodoForm = () => {
+interface TodoFormProps {
+  formSubmissionEvent?: () => void;
+}
+
+export const TodoForm = ({ formSubmissionEvent }: TodoFormProps) => {
   const [todoName, setTodoName] = useState('')
   const [description, setDescription] = useState('')
   const [priority, setPriority] = useState(2) // default medium
@@ -15,9 +19,15 @@ export const TodoForm = () => {
     }
 
     mutate({ name: todoName, description, priority });
-    setTodoName('')
-    setDescription('')
-    setPriority(2)
+    setTodoName('');
+    setDescription('');
+    setPriority(2);
+
+    if (formSubmissionEvent) {
+      setTimeout(() => {
+        formSubmissionEvent()
+      }, 250);
+    }
   }
 
   return (
