@@ -6,6 +6,13 @@ type TodoInput = {
   priority?: number
 }
 
+type TodoUpdate = {
+  id: number
+  name?: string
+  description?: string
+  priority?: number
+}
+
 const API_URL = 'https://eli-workshop.vercel.app/api/users/hana15/todos'
 
 export class ApiError extends Error {
@@ -45,6 +52,17 @@ export const todoApi = {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(todoInput),
+    })
+    return handleResponse<Todo>(response)
+  },
+
+  async updateTodo(update: TodoUpdate) {
+    const response = await fetch(`${API_URL}/${update.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(update),
     })
     return handleResponse<Todo>(response)
   },

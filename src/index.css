@@ -502,11 +502,19 @@ footer {
   transition: all 0.2s;
 }
 
-.todo-actions button:first-child {
+.todo-actions button.edit {
+  background-color: var(--primary);
+}
+
+.todo-actions button.edit:hover {
+  background-color: var(--primary-hover);
+}
+
+.todo-actions button.delete {
   background-color: var(--danger);
 }
 
-.todo-actions button:first-child:hover {
+.todo-actions button.delete:hover {
   background-color: #c03537;
 }
 
