@@ -1,4 +1,4 @@
-import { TodoForm } from './todo-form'
+import { TodoForm } from './todo-form-quick'
 import { TodoItem } from './todo-item'
 import { Spinner } from '../spinner'
 import { ErrorMessage } from '../error-message'

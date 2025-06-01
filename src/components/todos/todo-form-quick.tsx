@@ -19,7 +19,7 @@ export const TodoForm = () => {
 
   return (
     <div className="input-group">
-      <input value={todoName} onChange={handleInputChange} name="todo-text" placeholder="What needs to be done?" />
+      <input value={todoName} onChange={handleInputChange} name="todo-text" placeholder="Quickly add task" />
       <button onClick={handleSubmit}>Add</button>
     </div>
   )
