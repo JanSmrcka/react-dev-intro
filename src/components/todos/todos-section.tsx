@@ -25,10 +25,22 @@ export const TodosSection = () => {
 
   const filteredTodos =
     todos?.filter((todo) => {
+      // Normalize text by removing diacritics and converting to lowercase
+      const normalizeText = (text: string) =>
+        text
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+
+      const normalizedFilter = normalizeText(filter)
+      const normalizedName = normalizeText(todo.name)
+      const normalizedDescription = todo.description
+        ? normalizeText(todo.description)
+        : ''
+
       const matchesText =
-        todo.name.toLowerCase().includes(filter.toLowerCase()) ||
-        (todo.description &&
-          todo.description.toLowerCase().includes(filter.toLowerCase()))
+        normalizedName.includes(normalizedFilter) ||
+        (todo.description && normalizedDescription.includes(normalizedFilter))
 
       const matchesStatus =
         statusFilter === 'all' ||
@@ -42,7 +54,7 @@ export const TodosSection = () => {
   const completedTodosCount =
     todos?.filter((todo) => todo.completed).length || 0
   const totalTodosCount = todos?.length || 0
-	
+
   return (
     <Box component="main" sx={{ mt: 3 }}>
       {error && (
