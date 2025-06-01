@@ -1,16 +1,17 @@
-import { useState, type ChangeEvent } from 'react'
+import { type ChangeEvent } from 'react'
 
 type SearchBarProps = {
+  searchTerm: string
   onSearch: (searchTerm: string) => void
 }
 
-export const SearchBar = ({ onSearch }: SearchBarProps) => {
-  const [searchTerm, setSearchTerm] = useState('')
-
+export const SearchBar = ({ searchTerm, onSearch }: SearchBarProps) => {
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setSearchTerm(value)
-    onSearch(value)
+    onSearch(e.target.value)
+  }
+
+  const handleClear = () => {
+    onSearch('')
   }
 
   return (
@@ -22,6 +23,11 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
         placeholder="Search tasks..."
         aria-label="Search tasks"
       />
+      {searchTerm && (
+        <button onClick={handleClear} className="clear-search" aria-label="Clear search">
+          ×
+        </button>
+      )}
     </div>
   )
 }

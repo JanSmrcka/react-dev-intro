@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 import type { Todo } from '../../types'
 import { useTodoDelete } from '../../hooks/useTodoDelete'
 import { useTodoToggle } from '../../hooks/useTodoToggle'
@@ -8,6 +8,7 @@ type TodoItemProps = {
 }
 
 export const TodoItem = ({ todo }: TodoItemProps) => {
+  const [searchParams] = useSearchParams()
   const { mutate: deleteTodo } = useTodoDelete()
   const { mutate: toggleTodo } = useTodoToggle()
 
@@ -19,6 +20,9 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
     toggleTodo({ id: todo.id, completed: !todo.completed })
   }
 
+  // Preserve search parameters when navigating to detail
+  const detailLink = `/todos/${todo.id}${searchParams.toString() ? `?${searchParams.toString()}` : ''}`
+
   return (
     <li className={todo.completed ? 'completed' : ''}>
       <span>{todo.name}</span>
@@ -26,7 +30,7 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
       <button onClick={handleToggleTodo} className="toggle">
         {todo.completed ? 'Undo' : 'Completed'}
       </button>
-      <Link to={`/todos/${todo.id}`} className="link">
+      <Link to={detailLink} className="link">
         Show detail
       </Link>
     </li>

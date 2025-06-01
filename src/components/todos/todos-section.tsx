@@ -4,18 +4,29 @@ import { Spinner } from '../spinner'
 import { ErrorMessage } from '../error-message'
 import { useTodosQuery } from '../../hooks/useTodosQuery'
 import { SearchBar } from './search-bar'
-import { useState } from 'react'
+import { useSearchParams } from 'react-router'
 
 export const TodosSection = () => {
   const { data: todos, error, isLoading, refetch } = useTodosQuery()
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const searchTerm = searchParams.get('search') || ''
+
+  const handleSearch = (term: string) => {
+    const newParams = new URLSearchParams(searchParams)
+    if (term) {
+      newParams.set('search', term)
+    } else {
+      newParams.delete('search')
+    }
+    setSearchParams(newParams)
+  }
 
   const filteredTodos = todos?.filter((todo) => todo.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
   return (
     <main>
       {error && <ErrorMessage message={error.message} onDissmis={refetch} />}
-      <SearchBar onSearch={setSearchTerm} />
+      <SearchBar searchTerm={searchTerm} onSearch={handleSearch} />
       <TodoForm />
       <div className="todo-container">
         <ul>

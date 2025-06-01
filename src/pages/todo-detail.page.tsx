@@ -1,11 +1,14 @@
-import { Link, useNavigate } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 import { ErrorMessage } from '../components/error-message'
 import { Spinner } from '../components/spinner'
 import { useTodoQuery } from '../hooks/useTodoQuery'
 
 export default function TodoDetailPage() {
-  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const { data: todo, isLoading, isError } = useTodoQuery()
+
+  // Preserve all existing search parameters
+  const backLink = `/?${searchParams.toString()}`
 
   if (isLoading) {
     return <Spinner />
@@ -14,8 +17,8 @@ export default function TodoDetailPage() {
   if (!todo || isError) {
     return (
       <>
-        <ErrorMessage message="Todo not found" onDissmis={() => navigate('/')} />
-        <Link to="/" className="back-button">
+        <ErrorMessage message="Todo not found" onDissmis={() => (window.location.href = backLink)} />
+        <Link to={backLink} className="back-button">
           Back to Tasks
         </Link>
       </>
@@ -24,7 +27,7 @@ export default function TodoDetailPage() {
 
   return (
     <>
-      <Link to="/" className="back-button">
+      <Link to={backLink} className="back-button">
         Back to Tasks
       </Link>
       <div className="todo-detail">
