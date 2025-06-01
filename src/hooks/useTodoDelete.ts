@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { todoApi } from '../api/todoApi'
+import { showToast } from '../helpers/toast.notification.helper.ts'
 
 export const useTodoDelete = () => {
   const queryClient = useQueryClient()
@@ -10,7 +11,11 @@ export const useTodoDelete = () => {
       return await todoApi.deleteTodo(id)
     },
     onSuccess: () => {
+      showToast("Todo deleted successfully", 'success');
       queryClient.invalidateQueries({ queryKey: ['todos'] })
+    },
+    onError: (error) => {
+      showToast(`Error deleting todo: ${error.message}`, 'error');
     },
   })
 }

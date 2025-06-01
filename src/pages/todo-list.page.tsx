@@ -1,5 +1,6 @@
 import { Header } from '../components/header'
 import { TodosSection } from '../components/todos/todos-section'
+import { TodoForm } from '../components/todos/todo-form.tsx'
 
 const TodoListPage = () => {
 
@@ -25,12 +26,13 @@ const TodoListPage = () => {
         </div>
       </div>
 
-      <div className="w-1/3 flex px-30 justify-center items-center">
-        <div className="text-white flex flex-col gap-5">
+      <div className="w-2/4 flex px-5 justify-center items-center">
+        <div className="min-w-2xl text-white flex flex-col gap-5">
           <Header/>
+          <TodoForm />
         </div>
       </div>
-      <div className="w-2/3 h-full flex justify-center items-center p-5 md:p-10">
+      <div className="w-2/4 h-full flex justify-center items-center p-5 md:p-10">
         <TodosSection />
       </div>
     </div>

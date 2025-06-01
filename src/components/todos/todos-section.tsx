@@ -1,4 +1,3 @@
-import { TodoForm } from './todo-form'
 import { TodoItem } from './todo-item'
 import { Spinner } from '../spinner'
 import { ErrorMessage } from '../error-message'
@@ -7,6 +6,9 @@ import { useTodosQuery } from '../../hooks/useTodosQuery'
 export const TodosSection = () => {
   const { data: todos, error, isLoading, refetch } = useTodosQuery()
 
+  // State to control the confirmation dialog visibility
+  
+  
   return (
     <main className="w-full max-w-2xl flex flex-col gap-6 text-white">
       {error && (
@@ -14,8 +16,6 @@ export const TodosSection = () => {
           <ErrorMessage message={error.message} onDismiss={refetch} />
         </div>
       )}
-
-     <TodoForm />
 
       <div className="rounded-xl overflow-hidden max-h-[60vh] overflow-y-auto">
         {isLoading ? (
