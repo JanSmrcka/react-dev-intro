@@ -29,7 +29,8 @@ const TodoCreatePage = () => {
 
     if (!name.trim()) {
       return
-    }    createTodo(
+    }
+    createTodo(
       {
         name: name.trim(),
         description: description.trim() || undefined,

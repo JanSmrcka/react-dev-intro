@@ -155,7 +155,7 @@ export const lightTheme = createTheme({
             backgroundColor: '#2e7d32',
             color: '#ffffff',
           },
-					'&.MuiChip-colorPrimary': {
+          '&.MuiChip-colorPrimary': {
             backgroundColor: '#1976d2',
             color: '#ffffff',
           },

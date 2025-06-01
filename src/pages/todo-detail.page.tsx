@@ -283,7 +283,13 @@ const TodoDetailPage = () => {
                       )}
                     </IconButton>
 
-                    <Box sx={{ flex: 1, display: 'flex', justifyContent: 'space-between' }}>
+                    <Box
+                      sx={{
+                        flex: 1,
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                      }}
+                    >
                       <Typography
                         variant="h4"
                         sx={{

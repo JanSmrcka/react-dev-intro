@@ -42,6 +42,7 @@ export const TodosSection = () => {
   const completedTodosCount =
     todos?.filter((todo) => todo.completed).length || 0
   const totalTodosCount = todos?.length || 0
+	
   return (
     <Box component="main" sx={{ mt: 3 }}>
       {error && (
