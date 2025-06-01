@@ -1,7 +1,16 @@
+import { Box, CircularProgress } from '@mui/material'
+
 export const Spinner = () => {
   return (
-    <div className="loading-container">
-      <div className="loading-spinner"></div>
-    </div>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        py: 4,
+      }}
+    >
+      <CircularProgress />
+    </Box>
   )
 }

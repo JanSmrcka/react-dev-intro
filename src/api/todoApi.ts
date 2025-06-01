@@ -1,6 +1,6 @@
-import type { Todo, TodoToggle } from '../types'
+import type { Todo, TodoToggle, TodoCreate } from '../types'
 
-const API_URL = 'https://eli-workshop.vercel.app/api/users/xsmrj00/todos'
+const API_URL = 'https://eli-workshop.vercel.app/api/users/vikd00/todos'
 
 export class ApiError extends Error {
   constructor(message: string) {
@@ -22,16 +22,13 @@ export const todoApi = {
     const response = await fetch(API_URL)
     return handleResponse<Todo[]>(response)
   },
-  async createTodo(newTodo: string) {
-    const body = {
-      name: newTodo,
-    }
+  async createTodo(newTodo: TodoCreate) {
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(newTodo),
     })
 
     return handleResponse<Todo>(response)
@@ -58,6 +55,17 @@ export const todoApi = {
   },
   async fetchTodo(id: number) {
     const response = await fetch(`${API_URL}/${id}`)
+    return handleResponse<Todo>(response)
+  },
+  async updateTodo(id: number, todo: Partial<TodoCreate>) {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(todo),
+    })
+
     return handleResponse<Todo>(response)
   },
 }
