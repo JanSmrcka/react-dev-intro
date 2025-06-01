@@ -14,7 +14,7 @@ export const TodoForm = () => {
   }
 
   const handleSubmit = () => {
-    mutate(todoName)
+    mutate({ name: todoName })
   }
 
   return (

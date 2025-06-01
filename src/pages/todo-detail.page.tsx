@@ -3,6 +3,8 @@ import { ErrorMessage } from '../components/error-message'
 import { Spinner } from '../components/spinner'
 import { useTodoQuery } from '../hooks/useTodoQuery'
 
+// TODO show completion status and modify
+
 export default function TodoDetailPage() {
   const [searchParams] = useSearchParams()
   const { data: todo, isLoading, isError } = useTodoQuery()
@@ -36,7 +38,7 @@ export default function TodoDetailPage() {
           <h2>{todo.name}</h2>
           <p>Status: {todo.completed ? 'Completed' : 'Not completed'}</p>
           <p>Priority: {todo.priority ? todo.priority : 'No prioritz'}</p>
-          <p>Description: {todo.completed ? todo.completed : 'No description'}</p>
+          <p>Description: {todo.description ? todo.description : 'No description'}</p>
         </div>
       </div>
     </>

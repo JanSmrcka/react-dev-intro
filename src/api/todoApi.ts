@@ -1,5 +1,11 @@
 import type { Todo, TodoToggle } from '../types'
 
+type TodoInput = {
+  name: string
+  description?: string
+  priority?: number
+}
+
 const API_URL = 'https://eli-workshop.vercel.app/api/users/hana15/todos'
 
 export class ApiError extends Error {
@@ -32,16 +38,13 @@ export const todoApi = {
     return handleResponse<Todo>(response)
   },
 
-  async createTodo(newTodo: string) {
-    const body = {
-      name: newTodo,
-    }
+  async createTodo(todoInput: TodoInput) {
     const response = await fetch(API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify(todoInput),
     })
     return handleResponse<Todo>(response)
   },

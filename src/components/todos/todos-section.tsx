@@ -1,4 +1,5 @@
 import { TodoForm } from './todo-form-quick'
+import { TodoFormDetailed } from './todo-form-detailed'
 import { TodoItem } from './todo-item'
 import { Spinner } from '../spinner'
 import { ErrorMessage } from '../error-message'
@@ -28,6 +29,7 @@ export const TodosSection = () => {
       {error && <ErrorMessage message={error.message} onDissmis={refetch} />}
       <SearchBar searchTerm={searchTerm} onSearch={handleSearch} />
       <TodoForm />
+      <TodoFormDetailed />
       <div className="todo-container">
         <ul>
           {filteredTodos?.map((todo) => {

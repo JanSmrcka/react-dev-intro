@@ -3,6 +3,9 @@ import type { Todo } from '../../types'
 import { useTodoDelete } from '../../hooks/useTodoDelete'
 import { useTodoToggle } from '../../hooks/useTodoToggle'
 
+// TODO: Double click to confirm delete
+// TODO Undo delete
+
 type TodoItemProps = {
   todo: Todo
 }
