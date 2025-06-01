@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { todoApi } from '../api/todoApi'
-import { showToast } from '../helpers/toast.notification.helper.ts'
+import { showToast } from '../helpers/toast.notification.helper.tsx'
 import type { Todo } from '../types.ts'
 
 interface CreateTodoPayload {

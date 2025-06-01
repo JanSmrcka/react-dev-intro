@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ApiError, todoApi } from '../api/todoApi'
 import type { Todo, TodoToggle } from '../types'
-import { showToast } from '../helpers/toast.notification.helper.ts'
+import { showToast } from '../helpers/toast.notification.helper.tsx'
 
 export const useTodoToggle = () => {
   const queryClient = useQueryClient()

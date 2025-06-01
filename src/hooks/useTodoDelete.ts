@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { todoApi } from '../api/todoApi'
-import { showToast } from '../helpers/toast.notification.helper.ts'
+import { showToast, showUndoToast } from '../helpers/toast.notification.helper.tsx'
 import type { Todo } from '../types.ts'
 
 export const useTodoDelete = () => {
@@ -9,17 +9,37 @@ export const useTodoDelete = () => {
   return useMutation({
     mutationKey: ['deleteTodo'],
     mutationFn: async (id: number) => {
+      // Request a todo from the cache
+      
       // Do optimistic update here
-      const previousTodos: Todo[] = queryClient.getQueryData(['todos']) || [];
-      if (previousTodos) {
-        const filteredTodos = previousTodos.filter(todo => todo.id !== id);
+      const allTodos: Todo[] = queryClient.getQueryData(['todos']) || [];
+      if (allTodos) {
+        const deletedTodo = (allTodos.find(todo => todo.id === id)) as Todo;
+
+        // Undo functionality
+        showUndoToast(deletedTodo, (todo: Todo) => {
+          const previousTodos: Todo[] = queryClient.getQueryData(['todos']) || [];
+          if (previousTodos) {
+            const newTodo = {
+              id: Date.now(),
+              name: todo.name,
+              priority: todo.priority,
+              description: todo.description,
+              completed: todo.completed,
+            }
+            queryClient.setQueryData(['todos'], [...previousTodos, newTodo])
+          }
+
+          todoApi.createTodo(todo.name, todo.priority, todo.description);
+        });
+        
+        const filteredTodos = allTodos.filter(todo => todo.id !== id);
         queryClient.setQueryData(['todos'], [...filteredTodos])
       }
       
       return await todoApi.deleteTodo(id)
     },
     onSuccess: () => {
-      showToast("Todo deleted successfully", 'success');
       queryClient.invalidateQueries({ queryKey: ['todos'] })
     },
     onError: (error) => {
