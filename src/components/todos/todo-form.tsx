@@ -1,6 +1,9 @@
 import { useState, type ChangeEvent } from 'react'
 import { useTodoCreate } from '../../hooks/useTodoCreate'
 
+// TODO clear form after submit
+// TODO send with enter
+
 export const TodoForm = () => {
   const [todoName, setTodoName] = useState('') // Pole - na prvni posici je hodnota stavu, na druhe funkce
 
