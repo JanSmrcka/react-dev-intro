@@ -4,8 +4,15 @@ export type Todo = {
   completed: boolean
   description?: string
   priority?: number
+  createdAt?: string
+  updatedAt?: string
+  userId?: string
 }
 
-// export type TodoCreate = Omit<Todo, 'id' | 'completed'>
+export type TodoCreate = {
+  name: string
+  description?: string
+  priority?: number
+}
 
 export type TodoToggle = Pick<Todo, 'id' | 'completed'>

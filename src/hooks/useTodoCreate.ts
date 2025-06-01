@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ApiError, todoApi } from '../api/todoApi'
-import type { Todo } from '../types'
+import type { Todo, TodoCreate } from '../types'
 
 export const useTodoCreate = () => {
   const queryClient = useQueryClient()
@@ -8,20 +8,20 @@ export const useTodoCreate = () => {
   return useMutation<
     Todo,
     ApiError,
-    string,
+    TodoCreate,
     { previousTodos: Todo[] | undefined }
   >({
     mutationKey: ['createTodo'],
-    mutationFn: async (todoName: string) => {
-      return await todoApi.createTodo(todoName)
+    mutationFn: async (todo: TodoCreate) => {
+      return await todoApi.createTodo(todo)
     },
-    onMutate: async (todoName) => {
+    onMutate: async (todo) => {
       const previousTodos = queryClient.getQueryData<Todo[]>(['todos'])
       queryClient.setQueryData<Todo[]>(['todos'], (old) => {
         return [
           ...(old || []),
           {
-            name: todoName,
+            ...todo,
             id: Date.now(),
             completed: false,
           },
