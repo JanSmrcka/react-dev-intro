@@ -1,11 +1,11 @@
-import { useState, type ChangeEvent } from 'react'
+import { useState, type ChangeEvent, type KeyboardEvent } from 'react'
 import { useTodoCreate } from '../../hooks/useTodoCreate'
 
 // TODO clear form after submit
 // TODO send with enter
 
 export const TodoForm = () => {
-  const [todoName, setTodoName] = useState('') // Pole - na prvni posici je hodnota stavu, na druhe funkce
+  const [todoName, setTodoName] = useState('')
 
   const { mutate } = useTodoCreate()
 
@@ -14,12 +14,28 @@ export const TodoForm = () => {
   }
 
   const handleSubmit = () => {
-    mutate({ name: todoName })
+    if (todoName.trim()) {
+      mutate({ name: todoName })
+      setTodoName('') // Clear form after submit
+    }
+  }
+
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      handleSubmit()
+    }
   }
 
   return (
     <div className="input-group">
-      <input value={todoName} onChange={handleInputChange} name="todo-text" placeholder="Quickly add task" />
+      <input
+        value={todoName}
+        onChange={handleInputChange}
+        onKeyPress={handleKeyPress}
+        name="todo-text"
+        placeholder="Quickly add task"
+      />
       <button onClick={handleSubmit}>Add</button>
     </div>
   )
