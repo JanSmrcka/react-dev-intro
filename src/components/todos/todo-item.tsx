@@ -2,6 +2,7 @@ import { Link, useSearchParams } from 'react-router'
 import type { Todo } from '../../types'
 import { useTodoDelete } from '../../hooks/useTodoDelete'
 import { useTodoToggle } from '../../hooks/useTodoToggle'
+import { useDeleteConfirmation } from '../../hooks/useDeleteConfirmation'
 
 // TODO: Double click to confirm delete
 // TODO Undo delete
@@ -20,6 +21,8 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
     deleteTodo(todo.id)
   }
 
+  const { isConfirming, handleDeleteClick } = useDeleteConfirmation(handleDeleteTodo)
+
   const handleToggleTodo = () => {
     toggleTodo({ id: todo.id, completed: !todo.completed })
   }
@@ -30,7 +33,9 @@ export const TodoItem = ({ todo }: TodoItemProps) => {
   return (
     <li className={todo.completed ? 'completed' : ''}>
       <span>{todo.name}</span>
-      <button onClick={handleDeleteTodo}>Delete</button>
+      <button onClick={handleDeleteClick} className={isConfirming ? 'confirming' : ''}>
+        {isConfirming ? 'Confirm' : 'Delete'}
+      </button>
       <button onClick={handleToggleTodo} className="toggle">
         {todo.completed ? 'Undo' : 'Completed'}
       </button>

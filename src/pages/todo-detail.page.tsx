@@ -4,9 +4,9 @@ import { Spinner } from '../components/spinner'
 import { useTodoQuery } from '../hooks/useTodoQuery'
 import { useTodoDelete } from '../hooks/useTodoDelete'
 import { useTodoToggle } from '../hooks/useTodoToggle'
+import { useDeleteConfirmation } from '../hooks/useDeleteConfirmation'
 
 // TODO modify todo
-// TODO confirm delete
 // TODO undo delete, do not redirect, but show deleted task instead
 
 export default function TodoDetailPage() {
@@ -24,6 +24,8 @@ export default function TodoDetailPage() {
       window.location.href = backLink
     }
   }
+
+  const { isConfirming, handleDeleteClick } = useDeleteConfirmation(handleDeleteTodo)
 
   const handleToggleTodo = () => {
     if (todo) {
@@ -68,7 +70,9 @@ export default function TodoDetailPage() {
             <p>Description: {todo.description ? todo.description : 'No description'}</p>
           </div>
           <div className="todo-actions">
-            <button onClick={handleDeleteTodo}>Delete</button>
+            <button onClick={handleDeleteClick} className={isConfirming ? 'confirming' : ''}>
+              {isConfirming ? 'Confirm' : 'Delete'}
+            </button>
             <button onClick={handleToggleTodo} className="toggle">
               {todo.completed ? 'Undo' : 'Complete'}
             </button>
