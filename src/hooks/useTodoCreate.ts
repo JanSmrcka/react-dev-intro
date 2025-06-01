@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { todoApi } from '../api/todoApi'
 import { showToast } from '../helpers/toast.notification.helper.ts'
+import type { Todo } from '../types.ts'
 
 interface CreateTodoPayload {
   name: string
@@ -14,6 +15,19 @@ export const useTodoCreate = () => {
   return useMutation({
     mutationKey: ['createTodo'],
     mutationFn: async ({ name, priority, description }: CreateTodoPayload) => {
+      // Do optimistic update here
+      const previousTodos: Todo[] = queryClient.getQueryData(['todos']) || [];
+      if (previousTodos) {
+        const newTodo = {
+          id: Date.now(),
+          name,
+          priority,
+          description,
+          completed: false,
+        }
+        queryClient.setQueryData(['todos'], [...previousTodos, newTodo])
+      }
+      
       return await todoApi.createTodo(name, priority, description)
     },
     onSuccess: () => {
