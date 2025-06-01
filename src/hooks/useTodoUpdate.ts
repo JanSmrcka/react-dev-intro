@@ -7,6 +7,7 @@ type TodoUpdate = {
   name?: string
   description?: string
   priority?: number
+  completed?: boolean
 }
 
 export const useTodoUpdate = () => {
@@ -18,20 +19,22 @@ export const useTodoUpdate = () => {
       return todoApi.updateTodo(update)
     },
     onMutate: async (variables) => {
+      // Cancel any outgoing refetches
       await queryClient.cancelQueries({ queryKey: ['todos'] })
       await queryClient.cancelQueries({
         queryKey: ['todo', String(variables.id)],
       })
 
+      // Snapshot the previous value
       const previousTodos = queryClient.getQueryData<Todo[]>(['todos'])
       const previousTodo = queryClient.getQueryData<Todo>(['todo', String(variables.id)])
 
-      // Update the todo in the list
+      // Optimistically update the todo in the list
       queryClient.setQueryData<Todo[]>(['todos'], (oldTodos) => {
         return (oldTodos || []).map((todo) => (todo.id === variables.id ? { ...todo, ...variables } : todo))
       })
 
-      // Update the single todo
+      // Optimistically update the single todo
       if (previousTodo) {
         queryClient.setQueryData<Todo>(['todo', String(variables.id)], {
           ...previousTodo,
@@ -40,6 +43,15 @@ export const useTodoUpdate = () => {
       }
 
       return { previousTodos, previousTodo }
+    },
+    onError: (_err, _variables, context) => {
+      // If the mutation fails, use the context returned from onMutate to roll back
+      if (context?.previousTodos) {
+        queryClient.setQueryData(['todos'], context.previousTodos)
+      }
+      if (context?.previousTodo) {
+        queryClient.setQueryData(['todo', String(context.previousTodo.id)], context.previousTodo)
+      }
     },
     onSettled: (_data, _error, variables) => {
       // Always refetch after error or success to ensure data consistency
