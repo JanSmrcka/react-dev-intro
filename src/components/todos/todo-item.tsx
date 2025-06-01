@@ -5,6 +5,7 @@ import { useTodoToggle } from '../../hooks/useTodoToggle'
 
 // TODO: Double click to confirm delete
 // TODO Undo delete
+// TODO FIX: when user adds new task and instantly goes to detail, the task is not shown due to optimistic update.
 
 type TodoItemProps = {
   todo: Todo

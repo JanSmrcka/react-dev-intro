@@ -5,6 +5,8 @@ import { lazy, Suspense } from 'react'
 import { Spinner } from './components/spinner'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+// TODO let user switch layout
+
 const TodoListPage = lazy(() => import('./pages/todo-list.page'))
 const TodoDetailPage = lazy(() => import('./pages/todo-detail.page'))
 
