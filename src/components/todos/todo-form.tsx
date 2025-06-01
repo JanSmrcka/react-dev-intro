@@ -32,7 +32,6 @@ export const TodoForm = ({ formSubmissionEvent }: TodoFormProps) => {
 
   return (
     <form onSubmit={handleSubmit} className="w-full flex flex-col gap-4 text-white">
-      {/* Title */}
       <div className="bg-slate-800 rounded-xl px-4 py-3 shadow-md backdrop-blur-md">
         <input
           value={todoName}
@@ -42,8 +41,7 @@ export const TodoForm = ({ formSubmissionEvent }: TodoFormProps) => {
           className="w-full bg-transparent text-white placeholder-slate-400 focus:outline-none"
         />
       </div>
-
-      {/* Description */}
+      
       <div className="bg-slate-800 rounded-xl px-4 py-3 shadow-md backdrop-blur-md">
         <textarea
           value={description}
@@ -54,8 +52,7 @@ export const TodoForm = ({ formSubmissionEvent }: TodoFormProps) => {
           className="w-full bg-transparent text-white placeholder-slate-400 focus:outline-none resize-none"
         />
       </div>
-
-      {/* Priority and Submit */}
+      
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
         <div className="flex items-center gap-3">
           <label htmlFor="priority" className="text-sm text-slate-300">
