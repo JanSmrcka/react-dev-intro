@@ -1,0 +1,55 @@
+.todo-form-detailed-collapsible {
+  border: 1px solid var(--bg-secondary, #e0e0e0);
+  border-radius: var(--radius, 8px);
+  background: var(--surface, #232428);
+  margin-bottom: 1.5rem;
+}
+
+.todo-form-detailed-header {
+  padding: 0.75rem 1rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  background: transparent;
+  border-radius: var(--radius, 8px) var(--radius, 8px) 0 0;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+}
+.todo-form-detailed-header:hover {
+  background: var(--bg-secondary, #202225);
+}
+
+.todo-form-detailed-arrow {
+  font-size: 1.2em;
+  margin-right: 0.5em;
+  color: var(--primary, #7289da);
+  display: inline-block;
+}
+.todo-form-detailed-arrow.collapsed {
+}
+.todo-form-detailed-arrow:not(.collapsed) {
+}
+
+.todo-form-detailed-content {
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+  max-height: 600px;
+  opacity: 1;
+  padding: 0 1rem 1rem 1rem;
+  background: transparent;
+}
+.todo-form-detailed-content.collapsed {
+  max-height: 0;
+  opacity: 0;
+  padding-bottom: 0;
+}
+
+.todo-form-detailed {
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  margin-top: 0.5rem;
+}
+
+html {
+  overflow-y: scroll;
+}
