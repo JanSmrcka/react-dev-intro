@@ -8,6 +8,7 @@ import { SearchBar } from './search-bar'
 import { useSearchParams } from 'react-router'
 import { useTransition } from 'react'
 import { useEffect, useState } from 'react'
+import React from 'react'
 
 export const TodosSection = () => {
   const { data: todos, error, isLoading, refetch } = useTodosQuery()
@@ -15,6 +16,9 @@ export const TodosSection = () => {
   const searchTerm = searchParams.get('search') || ''
   const [isPending, startTransition] = useTransition()
   const [showSpinner, setShowSpinner] = useState(false)
+  const [simulateDelay, setSimulateDelay] = useState(false)
+  const [delayedFilteredTodos, setDelayedFilteredTodos] = useState<typeof todos>([])
+  const [isFiltering, setIsFiltering] = useState(false)
 
   useEffect(() => {
     let timeout: ReturnType<typeof setTimeout> | null = null
@@ -40,6 +44,24 @@ export const TodosSection = () => {
     })
   }
 
+  useEffect(() => {
+    if (simulateDelay) {
+      setIsFiltering(true)
+      setDelayedFilteredTodos(undefined)
+      const timeout = setTimeout(() => {
+        setDelayedFilteredTodos(todos?.filter((todo) => todo.name.toLowerCase().includes(searchTerm.toLowerCase())))
+        setIsFiltering(false)
+      }, 2000)
+      return () => {
+        clearTimeout(timeout)
+        setIsFiltering(false)
+      }
+    } else {
+      setDelayedFilteredTodos(todos?.filter((todo) => todo.name.toLowerCase().includes(searchTerm.toLowerCase())))
+      setIsFiltering(false)
+    }
+  }, [todos, searchTerm, simulateDelay])
+
   const filteredTodos = todos?.filter((todo) => todo.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
   return (
@@ -47,14 +69,25 @@ export const TodosSection = () => {
       {error && <ErrorMessage message={error.message} onDissmis={refetch} />}
       <TodoForm />
       <TodoFormDetailed />
+      <div style={{ marginBottom: 16 }}>
+        <label>
+          <input
+            type="checkbox"
+            checked={simulateDelay}
+            onChange={(e) => setSimulateDelay(e.target.checked)}
+            style={{ marginRight: 8 }}
+          />
+          Simulate search delay (show useTransition)
+        </label>
+      </div>
       <SearchBar searchTerm={searchTerm} onSearch={handleSearch} />
       <div className="todo-container">
         <ul>
-          {filteredTodos?.map((todo) => {
+          {(simulateDelay ? delayedFilteredTodos : filteredTodos)?.map((todo) => {
             return <TodoItem key={todo.id} todo={todo} />
           })}
         </ul>
-        {showSpinner && <Spinner />}
+        {(showSpinner || isFiltering) && <Spinner />}
       </div>
     </main>
   )
