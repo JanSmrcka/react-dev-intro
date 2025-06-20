@@ -13,7 +13,7 @@ import { useState, type ChangeEvent } from 'react'
 export default function TodoDetailPage() {
   const [searchParams] = useSearchParams()
   const { data: todo, isLoading, isError } = useTodoQuery()
-  const { mutate: deleteTodo } = useTodoDelete()
+  const { mutate: deleteTodo, isLoading: isDeleting } = useTodoDelete()
   const { mutate: toggleTodo } = useTodoToggle()
   const { mutate: updateTodo } = useTodoUpdate()
   const [isEditing, setIsEditing] = useState(false)
@@ -28,8 +28,11 @@ export default function TodoDetailPage() {
 
   const handleDeleteTodo = () => {
     if (todo) {
-      deleteTodo(todo.id)
-      window.location.href = backLink
+      deleteTodo(todo.id, {
+        onSuccess: () => {
+          window.location.href = backLink
+        },
+      })
     }
   }
 
@@ -160,8 +163,12 @@ export default function TodoDetailPage() {
                 <button onClick={handleEditClick} className="edit">
                   Edit
                 </button>
-                <button onClick={handleDeleteClick} className={`delete ${isConfirming ? 'confirming' : ''}`}>
-                  {isConfirming ? 'Confirm' : 'Delete'}
+                <button
+                  onClick={handleDeleteClick}
+                  className={`delete ${isConfirming ? 'confirming' : ''}`}
+                  disabled={isDeleting}
+                >
+                  {isDeleting ? 'Deleting...' : isConfirming ? 'Confirm' : 'Delete'}
                 </button>
                 <button onClick={handleToggleTodo} className="toggle">
                   {todo.completed ? 'Undo' : 'Complete'}
