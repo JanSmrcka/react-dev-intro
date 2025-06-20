@@ -67,8 +67,8 @@ export const TodosSection = () => {
   return (
     <main>
       {error && <ErrorMessage message={error.message} onDissmis={refetch} />}
-      <TodoForm />
       <TodoFormDetailed />
+      <TodoForm />
       <div style={{ marginBottom: 16 }}>
         <label>
           <input
