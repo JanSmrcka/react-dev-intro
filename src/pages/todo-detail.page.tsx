@@ -131,9 +131,9 @@ export default function TodoDetailPage() {
               <div className="form-group">
                 <label htmlFor="priority">Priority</label>
                 <select id="priority" name="priority" value={editData.priority} onChange={handleInputChange}>
-                  <option value={1}>Low</option>
-                  <option value={2}>Medium</option>
-                  <option value={3}>High</option>
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
                 </select>
               </div>
 
