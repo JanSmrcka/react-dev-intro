@@ -353,8 +353,6 @@ footer {
   }
 }
 
-/* ...existing code... */
-
 .error-message {
   background-color: rgba(237, 66, 69, 0.15);
   border-left: 4px solid var(--danger);
@@ -408,8 +406,6 @@ footer {
     transform: translateY(0);
   }
 }
-
-/* ...existing code... */
 
 /* Todo Detail Styles */
 .todo-detail {
@@ -470,4 +466,29 @@ footer {
 
 .back-button:hover {
   background-color: var(--primary-hover);
+}
+
+.todo-item-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.todo-item {
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.todo-item-link:hover .todo-item,
+.todo-item-link:focus .todo-item {
+  box-shadow: 0 6px 24px 0 rgba(0,0,0,0.18), 0 1.5px 6px 0 rgba(0,0,0,0.12);
+  transform: translateY(-2px) scale(1.01);
+  z-index: 2;
+}
+.todo-item .priority-icon {
+  transition: transform 0.15s;
+}
+.todo-item-link:hover .priority-icon,
+.todo-item-link:focus .priority-icon {
+  transform: scale(1.15);
+}
+.todo-item button {
+  margin-left: 0.5rem;
 }
