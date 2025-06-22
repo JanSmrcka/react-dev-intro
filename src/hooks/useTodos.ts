@@ -3,6 +3,7 @@ import { useTodosQuery } from './useTodosQuery'
 import { useTodoCreate } from './useTodoCreate'
 import { useTodoToggle } from './useTodoToggle'
 import { useTodoDelete } from './useTodoDelete'
+import type { TodoCreate } from '../types'
 
 export const useTodos = () => {
   const { data: todos = [], error, isLoading, refetch } = useTodosQuery()
@@ -11,8 +12,8 @@ export const useTodos = () => {
   const { mutateAsync: remove } = useTodoDelete()
 
   const addTodo = useCallback(
-    (todoName: string) => {
-      return createTodo(todoName)
+    (todoData: TodoCreate) => {
+      return createTodo(todoData)
     },
     [createTodo],
   )

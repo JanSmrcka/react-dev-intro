@@ -1,14 +1,17 @@
 import { createContext } from 'react'
-import type { Todo } from '../types'
+import type { Todo, TodoCreate } from '../types'
+import type { RefetchOptions, QueryObserverResult } from '@tanstack/react-query'
 
 type TodosContext = {
   todos: Todo[]
   isLoading: boolean
   error: string | null
-  addTodo: (todoName: string) => Promise<void>
-  toggleTodo: (id: number, completed: boolean) => Promise<void>
-  deleteTodo: (id: number) => Promise<void>
-  refetch: () => Promise<void>
+  addTodo: (todoData: TodoCreate) => Promise<Todo>
+  toggleTodo: (id: number, completed: boolean) => Promise<Todo>
+  deleteTodo: (id: number) => Promise<unknown>
+  refetch: (
+    options?: RefetchOptions,
+  ) => Promise<QueryObserverResult<Todo[], Error>>
 }
 
 export const TodosContext = createContext<TodosContext | undefined>(undefined)
