@@ -131,7 +131,7 @@ h1 {
 .switch #switch2 + label::after { left: 40px; }
 .switch #switch3 + label::after { left: 80px; }
 .switch #switch1:checked ~ .switch__inner {
-  background-color: red;
+  background-color: green;
   transition: background-color 200ms ease-in-out;
 }
 .switch #switch1:checked ~ .switch__inner::after {
@@ -139,7 +139,7 @@ h1 {
   transition: left 200ms ease-in-out;
 }
 .switch #switch2:checked ~ .switch__inner {
-  background-color: #fff;
+  background-color: gray;
   transition: background-color 200ms ease-in-out;
 }
 .switch #switch2:checked ~ .switch__inner::after {
@@ -147,7 +147,7 @@ h1 {
   transition: left 200ms ease-in-out;
 }
 .switch #switch3:checked ~ .switch__inner {
-  background-color: green;
+  background-color: red;
   transition: background-color 200ms ease-in-out;
 }
 .switch #switch3:checked ~ .switch__inner::after {
