@@ -1,6 +1,5 @@
 import { Layout } from './components/layout'
 import { lazy, Suspense } from 'react'
-import { Spinner } from './components/spinner'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { TodoDetailDrawer } from './components/todos/todo-detail-drawer'
 import { BrowserRouter, Route, Routes, useLocation, useNavigate, useParams } from 'react-router'

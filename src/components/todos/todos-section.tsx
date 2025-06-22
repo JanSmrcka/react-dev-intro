@@ -16,6 +16,13 @@ export const TodosSection = () => {
     return matchPriority && matchSearch
   })
 
+  const sortedTodos = filteredTodos?.slice().sort((a, b) => {
+    return (b.priority ?? 0) - (a.priority ?? 0)
+  })
+
+  const activeTodos = sortedTodos?.filter((t) => !t.completed) ?? []
+  const completedTodos = sortedTodos?.filter((t) => t.completed) ?? []
+
   return (
     <main>
       {error && <ErrorMessage message={error.message} onDismiss={refetch} />}
@@ -35,10 +42,18 @@ export const TodosSection = () => {
         />
       </div>
       <div className="todo-container">
+        <h2>Todo ({activeTodos.length})</h2>
         <ul>
-          {filteredTodos?.map((todo) => {
-            return <TodoItem key={todo.id} todo={todo} />
-          })}
+          {activeTodos.map((todo) => (
+            <TodoItem key={todo.id} todo={todo} />
+          ))}
+        </ul>
+        <hr className="todos-separator" />
+        <h2>Hotovo ({completedTodos.length})</h2>
+        <ul>
+          {completedTodos.map((todo) => (
+            <TodoItem key={todo.id} todo={todo} />
+          ))}
         </ul>
         {isLoading && <Spinner />}
       </div>
