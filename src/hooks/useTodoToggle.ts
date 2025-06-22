@@ -1,6 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { ApiError, todoApi } from '../api/todoApi'
 import type { Todo, TodoToggle } from '../types'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export const useTodoToggle = () => {
   const queryClient = useQueryClient()

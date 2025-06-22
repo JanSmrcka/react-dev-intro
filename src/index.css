@@ -231,6 +231,21 @@ button:disabled:hover {
   box-shadow: var(--shadow);
 }
 
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.filters input,
+.filters select {
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--bg-secondary);
+  background: var(--bg-secondary);
+  color: var(--text);
+}
+
 ul {
   list-style: none;
 }
@@ -412,13 +427,16 @@ footer {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  height: 100%;
+  justify-content: space-between;
+  padding: 5rem;
+
 }
 
 .todo-detail-card {
-  background-color: var(--surface);
-  border-radius: var(--radius);
-  padding: 20px;
-  box-shadow: var(--shadow);
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
 .todo-detail-card h2 {
