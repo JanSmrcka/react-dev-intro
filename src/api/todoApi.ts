@@ -1,7 +1,6 @@
-import type { Todo, TodoToggle } from '../types'
+import type { Todo, TodoToggle, TodoCreate } from '../types'
 
-const API_URL = 'https://eli-workshop.vercel.app/api/users/xsmrj00/todos'
-
+const API_URL = import.meta.env.VITE_API_URL
 export class ApiError extends Error {
   constructor(message: string) {
     super(message)
@@ -22,9 +21,11 @@ export const todoApi = {
     const response = await fetch(API_URL)
     return handleResponse<Todo[]>(response)
   },
-  async createTodo(newTodo: string) {
+  async createTodo(newTodo: TodoCreate) {
     const body = {
-      name: newTodo,
+      name: newTodo.name,
+      description: newTodo.description,
+      priority: newTodo.priority,
     }
     const response = await fetch(API_URL, {
       method: 'POST',

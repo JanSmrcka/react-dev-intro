@@ -1,13 +1,14 @@
-import { useSuspenseQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router'
 import { todoApi } from '../api/todoApi'
 
-export const useTodoQuery = () => {
+export const useTodoQuery = (idParam?: number) => {
   const params = useParams()
-  return useSuspenseQuery({
-    queryKey: ['todo', params.id],
+  const id = idParam ?? Number(params.id)
+  return useQuery({
+    queryKey: ['todo', id],
     queryFn: () => {
-      return todoApi.fetchTodo(Number(params.id))
+      return todoApi.fetchTodo(id)
     },
   })
 }

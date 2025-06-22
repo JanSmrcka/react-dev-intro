@@ -60,6 +60,122 @@ h1 {
   box-shadow: var(--shadow);
 }
 
+.todo-advanced {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+  padding: 0 0.75rem;
+}
+
+.todo-advanced.open {
+  max-height: 500px;
+  opacity: 1;
+  pointer-events: auto;
+  padding: 1rem 0.75rem;
+}
+
+.priority-switch {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.priority-switch input[type='range'] {
+  width: 100%;
+}
+
+.priority-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 120px; /* zvýšeno z 90px */
+  font-size: 0.9em;
+  margin-top: 4px;
+  color: var(--text-secondary);
+  margin-left: 0.5px;
+}
+
+/* --- Priority Switch Styles --- */
+.switch {
+  position: relative;
+  width: 120px; /* zvýšeno z 90px */
+  height: 30px; /* mírně zvýšeno */
+}
+.switch input[type="radio"] {
+  position: absolute;
+  z-index: 9;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 40px; /* zvýšeno z 30px */
+  height: 30px; /* zvýšeno z 25px */
+  margin: 0;
+  cursor: pointer;
+}
+.switch input[type="radio"] + label::after {
+  position: absolute;
+  content: "";
+  width: 40px; /* zvýšeno z 30px */
+  height: 30px; /* zvýšeno z 25px */
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+.switch #switch1 + label::after { left: 0; }
+.switch #switch2 + label::after { left: 40px; }
+.switch #switch3 + label::after { left: 80px; }
+.switch #switch1:checked ~ .switch__inner {
+  background-color: green;
+  transition: background-color 200ms ease-in-out;
+}
+.switch #switch1:checked ~ .switch__inner::after {
+  left: 0;
+  transition: left 200ms ease-in-out;
+}
+.switch #switch2:checked ~ .switch__inner {
+  background-color: gray;
+  transition: background-color 200ms ease-in-out;
+}
+.switch #switch2:checked ~ .switch__inner::after {
+  left: 40px;
+  transition: left 200ms ease-in-out;
+}
+.switch #switch3:checked ~ .switch__inner {
+  background-color: red;
+  transition: background-color 200ms ease-in-out;
+}
+.switch #switch3:checked ~ .switch__inner::after {
+  left: 80px;
+  transition: left 200ms ease-in-out;
+}
+.switch__inner {
+  width: 120px; /* zvýšeno z 90px */
+  height: 30px; /* zvýšeno z 25px */
+  background-color: #fff;
+  border: solid 1px grey;
+  border-radius: 4px;
+  position: relative;
+}
+.switch__inner::after {
+  position: absolute;
+  display: block;
+  content: "";
+  width: 40px; /* zvýšeno z 30px */
+  height: 30px; /* zvýšeno z 25px */
+  top: 0;
+  left: 0;
+  background-color: #eee;
+  border: solid 1px grey;
+  border-radius: 4px;
+  transition: left 200ms ease-in-out;
+}
+
 input[type='text'],
 input {
   flex: 1;
@@ -69,6 +185,17 @@ input {
   color: var(--text);
   font-size: 1rem;
   outline: none;
+}
+
+textarea {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+  resize: vertical;
 }
 
 input::placeholder {
@@ -102,6 +229,21 @@ button:disabled:hover {
   border-radius: var(--radius);
   padding: 1rem;
   box-shadow: var(--shadow);
+}
+
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.filters input,
+.filters select {
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--bg-secondary);
+  background: var(--bg-secondary);
+  color: var(--text);
 }
 
 ul {
@@ -154,6 +296,12 @@ li button.toggle {
 
 li button:hover {
   background-color: #c03537;
+}
+
+.todos-separator {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 1rem 0;
 }
 
 footer {
@@ -226,8 +374,6 @@ footer {
   }
 }
 
-/* ...existing code... */
-
 .error-message {
   background-color: rgba(237, 66, 69, 0.15);
   border-left: 4px solid var(--danger);
@@ -282,20 +428,21 @@ footer {
   }
 }
 
-/* ...existing code... */
-
 /* Todo Detail Styles */
 .todo-detail {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  height: 100%;
+  justify-content: space-between;
+  padding: 5rem;
+
 }
 
 .todo-detail-card {
-  background-color: var(--surface);
-  border-radius: var(--radius);
-  padding: 20px;
-  box-shadow: var(--shadow);
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
 .todo-detail-card h2 {
@@ -324,6 +471,12 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.todo-detail-controls {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
 .todo-detail-error {
   text-align: center;
   background-color: var(--surface);
@@ -343,4 +496,29 @@ footer {
 
 .back-button:hover {
   background-color: var(--primary-hover);
+}
+
+.todo-item-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.todo-item {
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.todo-item-link:hover .todo-item,
+.todo-item-link:focus .todo-item {
+  box-shadow: 0 6px 24px 0 rgba(0,0,0,0.18), 0 1.5px 6px 0 rgba(0,0,0,0.12);
+  transform: translateY(-2px) scale(1.01);
+  z-index: 2;
+}
+.todo-item .priority-icon {
+  transition: transform 0.15s;
+}
+.todo-item-link:hover .priority-icon,
+.todo-item-link:focus .priority-icon {
+  transform: scale(1.15);
+}
+.todo-item button {
+  margin-left: 0.5rem;
 }

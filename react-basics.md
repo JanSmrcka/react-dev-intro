@@ -876,6 +876,10 @@ function TodoList() {
 }
 ```
 
+The repository also provides a ready‑made version of this pattern. See
+`src/hooks/useTodos.ts` for the hook implementation and
+`src/providers/todos.provider.tsx` for the provider component.
+
 ## React Router
 
 React Router is the standard routing library for React applications. It enables navigation between views in your application, allowing you to build single-page applications with multiple routes.
