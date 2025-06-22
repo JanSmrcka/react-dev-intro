@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react'
+import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { useTodoCreate } from '../../hooks/useTodoCreate'
 
 export const TodoForm = () => {
@@ -10,22 +10,24 @@ export const TodoForm = () => {
     setTodoName(e.target.value)
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     console.log('Form submitted with todo:', todoName)
     mutate(todoName)
+    setTodoName('')
   }
 
   return (
-    <div className="input-group">
+    <form className="input-group" onSubmit={handleSubmit}>
       <input
         value={todoName}
         onChange={handleInputChange}
         name="todo-text"
         placeholder="What needs to be done?"
       />
-      <button onClick={handleSubmit} type="submit">
+      <button type="submit">
         Add
       </button>
-    </div>
+    </form>
   )
 }

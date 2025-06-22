@@ -77,6 +77,7 @@ Main elements we'll be working with:
 - `App` component - the main container for our application
 - Todo input form - for adding new tasks
 - Todo list - to display tasks dynamically
+- State management handled with React Query via a custom `useTodos` hook
 - We'll add additional components like `TodoItem`, `TodoList`, `TodoForm`, etc.
 
 ## Documentation

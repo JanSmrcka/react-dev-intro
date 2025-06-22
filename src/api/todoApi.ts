@@ -1,7 +1,6 @@
 import type { Todo, TodoToggle } from '../types'
 
-const API_URL = 'https://eli-workshop.vercel.app/api/users/xsmrj00/todos'
-
+const API_URL = import.meta.env.VITE_API_URL
 export class ApiError extends Error {
   constructor(message: string) {
     super(message)
