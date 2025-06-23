@@ -35,8 +35,7 @@ export const useTodoToggle = () => {
 
       return { previousTodos, previousTodo }
     },
-    onSettled: (_data, _error, variables) => {
-      // Always refetch after error or success to ensure data consistency
+    onSettled: (data, error, variables) => {
       queryClient.invalidateQueries({ queryKey: ['todos'] })
       queryClient.invalidateQueries({
         queryKey: ['todo', String(variables.id)],
