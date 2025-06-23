@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent, type FormEvent } from 'react'
 import { useTodoCreate } from '../../hooks/useTodoCreate'
 import { useEffect } from 'react'
-import './todo-form-detailed.css'
+import '../../todo-form-detailed.css'
 
 type TodoFormData = {
   name: string
