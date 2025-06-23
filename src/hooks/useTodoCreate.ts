@@ -16,8 +16,6 @@ export const useTodoCreate = () => {
     mutationFn: async (todoInput: TodoInput) => {
       return todoApi.createTodo(todoInput)
     },
-    // maybe async is problem?
-    // same problem as with todoDelete - screen refreshes numerous times.
     onMutate: async (todoInput) => {
       const previousTodos = queryClient.getQueryData<Todo[]>(['todos'])
       queryClient.setQueryData<Todo[]>(['todos'], (old) => {

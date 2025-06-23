@@ -4,9 +4,6 @@ import { lazy, Suspense } from 'react'
 import { Spinner } from './components/spinner'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-// TODO let user switch layout
-// TODO improve UI - add headers, icons, etc.
-
 const TodoListPage = lazy(() => import('./pages/todo-list.page'))
 const TodoDetailPage = lazy(() => import('./pages/todo-detail.page'))
 
