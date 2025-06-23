@@ -13,11 +13,11 @@ export const TodoForm = () => {
   const handleSubmit = () => {
     if (todoName.trim()) {
       mutate({ name: todoName })
-      setTodoName('') // Clear form after submit
+      setTodoName('')
     }
   }
 
-  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault()
       handleSubmit()
@@ -29,7 +29,7 @@ export const TodoForm = () => {
       <input
         value={todoName}
         onChange={handleInputChange}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
         name="todo-text"
         placeholder="Quickly add task"
       />
