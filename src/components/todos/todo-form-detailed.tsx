@@ -47,32 +47,14 @@ export const TodoFormDetailed = () => {
   return (
     <div className="todo-form-detailed-collapsible">
       <div
-        className="todo-form-detailed-header"
+        className="todo-form-detailed-header todo-form-detailed-header-clickable"
         onClick={() => setCollapsed((c) => !c)}
-        style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', userSelect: 'none' }}
       >
-        <span
-          className="todo-form-detailed-arrow"
-          style={{
-            display: 'inline-block',
-            marginRight: 8,
-            transition: 'color 0.2s',
-          }}
-        >
-          {collapsed ? '▶' : '▼'}
-        </span>
-        <h3 style={{ margin: 0 }}>Add New Task</h3>
+        <span className={`todo-form-detailed-arrow${collapsed ? ' collapsed' : ''}`}>{collapsed ? '▶' : '▼'}</span>
+        <h3 className="todo-form-detailed-title">Add New Task</h3>
       </div>
-      <div
-        className={`todo-form-detailed-content${collapsed ? ' collapsed' : ''}`}
-        style={{
-          overflow: 'hidden',
-          transition: 'max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s',
-          maxHeight: collapsed ? 0 : 600,
-          opacity: collapsed ? 0 : 1,
-        }}
-      >
-        <form onSubmit={handleSubmit} className="todo-form-detailed" style={{ marginTop: 16 }}>
+      <div className={`todo-form-detailed-content${collapsed ? ' collapsed' : ''}`}>
+        <form onSubmit={handleSubmit} className="todo-form-detailed">
           <div className="form-group">
             <label htmlFor="name">Task Name</label>
             <input

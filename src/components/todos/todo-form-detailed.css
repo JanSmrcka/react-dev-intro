@@ -53,3 +53,25 @@
 html {
   overflow-y: scroll;
 }
+
+.todo-form-detailed-header-clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.todo-form-detailed-title {
+  margin: 0;
+}
+
+.todo-form-detailed-arrow {
+  margin-right: 8px;
+  transition: color 0.2s;
+}
+
+.todo-form-detailed-content {
+  overflow: hidden;
+}
+
+.todo-form-detailed {
+  margin-top: 16px;
+}
