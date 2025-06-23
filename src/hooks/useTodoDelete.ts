@@ -17,7 +17,10 @@ export const useTodoDelete = () => {
       })
       return { previousTodos }
     },
-
-    // TODO onError
+    onError: (err, variables, context) => {
+      if (context?.previousTodos) {
+        queryClient.setQueryData<Todo[]>(['todos'], context.previousTodos)
+      }
+    },
   })
 }
