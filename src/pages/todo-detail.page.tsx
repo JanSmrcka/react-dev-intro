@@ -8,8 +8,6 @@ import { useDeleteConfirmation } from '../hooks/useDeleteConfirmation'
 import { useTodoUpdate } from '../hooks/useTodoUpdate'
 import { useState, type ChangeEvent } from 'react'
 
-// TODO undo delete, do not redirect, but show deleted task instead
-
 export default function TodoDetailPage() {
   const [searchParams] = useSearchParams()
   const { data: todo, isLoading, isError } = useTodoQuery()
